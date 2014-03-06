@@ -1,0 +1,15 @@
+{
+    "name": "myclabs/muih",
+    "type": "library",
+    "description": "PHP and Javascrcipt helpers for creation of Bootstrap 3 UI elements",
+    "keywords": ["ui", "bootstrap3", "helper"],
+    "homepage": "http://github.com/myclabs/muih",
+    "license": "MIT",
+    "autoload": {
+        "psr-0": {
+            "MyCLabs": "src/"
+        }
+    },
+    "require": {
+    }
+}
