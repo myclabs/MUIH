@@ -4,7 +4,6 @@ namespace MyCLabs\MUIH\ZendViewHelper;
 
 use MyCLabs\MUIH\Core\Panel as CorePanel;
 use MyCLabs\MUIH\ZendViewHelper\Traits\AttributesTrait;
-use MyCLabs\MUIH\ZendViewHelper\Traits\ClassAttributeTrait;
 
 /**
  * @author valentin-mcs
@@ -14,7 +13,6 @@ use MyCLabs\MUIH\ZendViewHelper\Traits\ClassAttributeTrait;
 class Panel
 {
     use AttributesTrait;
-    use ClassAttributeTrait;
 
     /**
      * @var CorePanel

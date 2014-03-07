@@ -9,7 +9,7 @@ use MyCLabs\MUIH\ZendViewHelper\Badge as ZendBadge;
  * @package    MyCLabs\MUIH
  * @subpackage ZendViewHelper\Zend1
  */
-class Badge extends ZendBadge implements Zend_View_Helper_Interface
+class Badge extends ZendBadge implements \Zend_View_Helper_Interface
 {
     use Zend1HelperTrait;
 }

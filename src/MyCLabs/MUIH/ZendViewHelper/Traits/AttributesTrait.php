@@ -41,4 +41,15 @@ trait AttributesTrait
 
         return $this;
     }
+
+    /**
+     * @param string $className
+     * @return $this
+     */
+    public function addClass($className)
+    {
+        $this->uiElement->addClass($className);
+
+        return $this;
+    }
 }

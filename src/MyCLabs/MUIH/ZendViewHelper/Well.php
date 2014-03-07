@@ -4,7 +4,6 @@ namespace MyCLabs\MUIH\ZendViewHelper;
 
 use MyCLabs\MUIH\Core\Well as CoreWell;
 use MyCLabs\MUIH\ZendViewHelper\Traits\AttributesTrait;
-use MyCLabs\MUIH\ZendViewHelper\Traits\ClassAttributeTrait;
 use MyCLabs\MUIH\ZendViewHelper\Traits\TitleEnhancementTrait;
 
 /**
@@ -15,7 +14,6 @@ use MyCLabs\MUIH\ZendViewHelper\Traits\TitleEnhancementTrait;
 class Well
 {
     use AttributesTrait;
-    use ClassAttributeTrait;
     use TitleEnhancementTrait;
     
     /**

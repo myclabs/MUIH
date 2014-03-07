@@ -3,7 +3,6 @@
 namespace MyCLabs\MUIH\Core;
 
 use MyCLabs\MUIH\Core\Traits\AttributesTrait;
-use MyCLabs\MUIH\Core\Traits\ClassAttributeTrait;
 
 /**
  * @author     valentin-mcs
@@ -13,7 +12,6 @@ use MyCLabs\MUIH\Core\Traits\ClassAttributeTrait;
 class GenericTag extends ElementAbstract
 {
     use AttributesTrait;
-    use ClassAttributeTrait;
 
     /**
      * @var string

@@ -5,7 +5,6 @@ namespace MyCLabs\MUIH\ZendViewHelper;
 use MyCLabs\MUIH\Core\Button as UIButton;
 use MyCLabs\MUIH\Core\Icon as UIIcon;
 use MyCLabs\MUIH\ZendViewHelper\Traits\AttributesTrait;
-use MyCLabs\MUIH\ZendViewHelper\Traits\ClassAttributeTrait;
 
 /**
  * @author valentin-mcs
@@ -15,7 +14,6 @@ use MyCLabs\MUIH\ZendViewHelper\Traits\ClassAttributeTrait;
 class Button
 {
     use AttributesTrait;
-    use ClassAttributeTrait;
 
     /**
      * @var UIButton

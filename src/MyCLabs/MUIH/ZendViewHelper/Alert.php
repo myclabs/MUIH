@@ -5,7 +5,6 @@ namespace MyCLabs\MUIH\ZendViewHelper;
 use MyCLabs\MUIH\Core\Alert as CoreAlert;
 use MyCLabs\MUIH\Core\GenericTag as CoreGenericTag;
 use MyCLabs\MUIH\ZendViewHelper\Traits\AttributesTrait;
-use MyCLabs\MUIH\ZendViewHelper\Traits\ClassAttributeTrait;
 
 /**
  * @author valentin-mcs
@@ -15,7 +14,6 @@ use MyCLabs\MUIH\ZendViewHelper\Traits\ClassAttributeTrait;
 class Alert
 {
     use AttributesTrait;
-    use ClassAttributeTrait;
 
     /**
      * @var CoreAlert

@@ -9,7 +9,7 @@ use MyCLabs\MUIH\ZendViewHelper\Button as ZendButton;
  * @package    MyCLabs\MUIH
  * @subpackage ZendViewHelper\Zend1
  */
-class Button extends ZendButton implements Zend_View_Helper_Interface
+class Button extends ZendButton implements \Zend_View_Helper_Interface
 {
     use Zend1HelperTrait;
 }

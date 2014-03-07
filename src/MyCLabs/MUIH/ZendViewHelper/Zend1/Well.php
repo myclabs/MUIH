@@ -9,7 +9,7 @@ use MyCLabs\MUIH\ZendViewHelper\Well as ZendWell;
  * @package    MyCLabs\MUIH
  * @subpackage ZendViewHelper\Zend1
  */
-class Well extends ZendWell implements Zend_View_Helper_Interface
+class Well extends ZendWell implements \Zend_View_Helper_Interface
 {
     use Zend1HelperTrait;
 }

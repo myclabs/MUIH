@@ -9,7 +9,7 @@ use MyCLabs\MUIH\ZendViewHelper\Alert as ZendAlert;
  * @package    MyCLabs\MUIH
  * @subpackage ZendViewHelper\Zend1
  */
-class Alert extends ZendAlert implements Zend_View_Helper_Interface
+class Alert extends ZendAlert implements \Zend_View_Helper_Interface
 {
     use Zend1HelperTrait;
 }

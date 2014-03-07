@@ -4,7 +4,6 @@ namespace MyCLabs\MUIH\Core;
 
 use Exception;
 use MyCLabs\MUIH\Core\Traits\AttributesTrait;
-use MyCLabs\MUIH\Core\Traits\ClassAttributeTrait;
 
 /**
  * @author     valentin-mcs
@@ -14,7 +13,6 @@ use MyCLabs\MUIH\Core\Traits\ClassAttributeTrait;
 class Label extends GenericTag
 {
     use AttributesTrait;
-    use ClassAttributeTrait;
 
     const TYPE_DEFAULT = 'default';
     const TYPE_PRIMARY = 'primary';

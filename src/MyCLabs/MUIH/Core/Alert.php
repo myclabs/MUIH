@@ -3,7 +3,6 @@
 namespace MyCLabs\MUIH\Core;
 
 use MyCLabs\MUIH\Core\Traits\AttributesTrait;
-use MyCLabs\MUIH\Core\Traits\ClassAttributeTrait;
 
 /**
  * @author     valentin-mcs
@@ -13,7 +12,6 @@ use MyCLabs\MUIH\Core\Traits\ClassAttributeTrait;
 class Alert extends GenericTag
 {
     use AttributesTrait;
-    use ClassAttributeTrait;
 
     const TYPE_SUCCESS = 'success';
     const TYPE_INFO = 'info';

@@ -2,7 +2,7 @@
 
 namespace MyCLabs\MUIH\ZendViewHelper\Traits;
 
-use MyCLabs\MUIH\Core\Traits\ClassAttributeTrait as CoreClassAttributeTrait;
+use MyCLabs\MUIH\Core\Traits\AttributesTrait as CoreAttributesTrait;
 
 /**
  * @author     valentin-mcs
@@ -12,21 +12,10 @@ use MyCLabs\MUIH\Core\Traits\ClassAttributeTrait as CoreClassAttributeTrait;
 trait TitleEnhancementTrait
 {
     /**
-     * @var CoreClassAttributeTrait
+     * @var CoreAttributesTrait
      */
     protected $uiElement = null;
 
-
-    /**
-     * @param string $className
-     * @return $this
-     */
-    public function addClass($className)
-    {
-        $this->uiElement->addClass($className);
-
-        return $this;
-    }
 
     /**
      * @param string $title

@@ -9,7 +9,7 @@ use MyCLabs\MUIH\ZendViewHelper\GenericTag as ZendGenericTag;
  * @package    MyCLabs\MUIH
  * @subpackage ZendViewHelper\Zend1
  */
-class GenericTag extends ZendGenericTag implements Zend_View_Helper_Interface
+class GenericTag extends ZendGenericTag implements \Zend_View_Helper_Interface
 {
     use Zend1HelperTrait;
 }

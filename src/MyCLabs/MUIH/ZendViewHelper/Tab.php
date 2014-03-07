@@ -5,7 +5,6 @@ namespace MyCLabs\MUIH\ZendViewHelper;
 use MyCLabs\MUIH\Core\Tab as CoreTab;
 use MyCLabs\MUIH\Core\Tabs as CoreTabs;
 use MyCLabs\MUIH\ZendViewHelper\Traits\AttributesTrait;
-use MyCLabs\MUIH\ZendViewHelper\Traits\ClassAttributeTrait;
 
 /**
  * @author valentin-mcs
@@ -15,7 +14,6 @@ use MyCLabs\MUIH\ZendViewHelper\Traits\ClassAttributeTrait;
 class Tabs
 {
     use AttributesTrait;
-    use ClassAttributeTrait;
 
     /**
      * @var CoreTabs

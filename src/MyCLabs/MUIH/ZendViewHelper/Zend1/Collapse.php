@@ -9,7 +9,7 @@ use MyCLabs\MUIH\ZendViewHelper\Collapse as ZendCollapse;
  * @package    MyCLabs\MUIH
  * @subpackage ZendViewHelper\Zend1
  */
-class Collapse extends ZendCollapse implements Zend_View_Helper_Interface
+class Collapse extends ZendCollapse implements \Zend_View_Helper_Interface
 {
     use Zend1HelperTrait;
 }

@@ -5,7 +5,6 @@ namespace MyCLabs\MUIH\ZendViewHelper;
 use MyCLabs\MUIH\Core\Label as CoreLabel;
 use MyCLabs\MUIH\Core\Icon as CoreIcon;
 use MyCLabs\MUIH\ZendViewHelper\Traits\AttributesTrait;
-use MyCLabs\MUIH\ZendViewHelper\Traits\ClassAttributeTrait;
 use MyCLabs\MUIH\ZendViewHelper\Traits\TitleEnhancementTrait;
 
 /**
@@ -16,7 +15,6 @@ use MyCLabs\MUIH\ZendViewHelper\Traits\TitleEnhancementTrait;
 class Label
 {
     use AttributesTrait;
-    use ClassAttributeTrait;
     use TitleEnhancementTrait;
     
     /**

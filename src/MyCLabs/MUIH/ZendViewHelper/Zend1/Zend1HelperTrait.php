@@ -12,17 +12,17 @@ trait Zend1HelperTrait
     /**
      * View object
      *
-     * @var Zend_View_Interface
+     * @var \Zend_View_Interface
      */
     public $view = null;
 
     /**
      * Set the View object
      *
-     * @param  Zend_View_Interface $view
-     * @return Zend_View_Helper_Interface
+     * @param  \Zend_View_Interface $view
+     * @return \Zend_View_Helper_Interface
      */
-    public function setView(Zend_View_Interface $view)
+    public function setView(\Zend_View_Interface $view)
     {
         $this->view = $view;
         return $this;

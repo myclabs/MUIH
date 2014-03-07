@@ -4,7 +4,6 @@ namespace MyCLabs\MUIH\ZendViewHelper;
 
 use MyCLabs\MUIH\Core\Collapse as CoreCollapse;
 use MyCLabs\MUIH\ZendViewHelper\Traits\AttributesTrait;
-use MyCLabs\MUIH\ZendViewHelper\Traits\ClassAttributeTrait;
 
 /**
  * @author valentin-mcs
@@ -14,8 +13,7 @@ use MyCLabs\MUIH\ZendViewHelper\Traits\ClassAttributeTrait;
 class Collapse
 {
     use AttributesTrait;
-    use ClassAttributeTrait;
-    
+
     /**
      * @var CoreCollapse
      */

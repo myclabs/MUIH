@@ -9,7 +9,7 @@ use MyCLabs\MUIH\ZendViewHelper\Icon as ZendIcon;
  * @package    MyCLabs\MUIH
  * @subpackage ZendViewHelper\Zend1
  */
-class Icon extends ZendIcon implements Zend_View_Helper_Interface
+class Icon extends ZendIcon implements \Zend_View_Helper_Interface
 {
     use Zend1HelperTrait;
 }

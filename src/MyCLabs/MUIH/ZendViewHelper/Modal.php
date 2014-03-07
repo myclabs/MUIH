@@ -4,7 +4,6 @@ namespace MyCLabs\MUIH\ZendViewHelper;
 
 use MyCLabs\MUIH\Core\Modal as CoreModal;
 use MyCLabs\MUIH\ZendViewHelper\Traits\AttributesTrait;
-use MyCLabs\MUIH\ZendViewHelper\Traits\ClassAttributeTrait;
 
 /**
  * @author valentin-mcs
@@ -14,7 +13,6 @@ use MyCLabs\MUIH\ZendViewHelper\Traits\ClassAttributeTrait;
 class Modal
 {
     use AttributesTrait;
-    use ClassAttributeTrait;
 
     /**
      * @var CoreModal

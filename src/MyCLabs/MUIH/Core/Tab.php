@@ -3,7 +3,6 @@
 namespace MyCLabs\MUIH\Core;
 
 use MyCLabs\MUIH\Core\Traits\AttributesTrait;
-use MyCLabs\MUIH\Core\Traits\ClassAttributeTrait;
 
 /**
  * @author     valentin-mcs
@@ -19,7 +18,6 @@ class Tab extends GenericTag
     static $defaultAjaxTabLoadingText = 'Loading…';
 
     use AttributesTrait;
-    use ClassAttributeTrait;
 
     /**
      * @var string

@@ -9,7 +9,7 @@ use MyCLabs\MUIH\ZendViewHelper\Label as ZendLabel;
  * @package    MyCLabs\MUIH
  * @subpackage ZendViewHelper\Zend1
  */
-class Label extends ZendLabel implements Zend_View_Helper_Interface
+class Label extends ZendLabel implements \Zend_View_Helper_Interface
 {
     use Zend1HelperTrait;
 }

@@ -9,7 +9,7 @@ use MyCLabs\MUIH\ZendViewHelper\Modal as ZendModal;
  * @package    MyCLabs\MUIH
  * @subpackage ZendViewHelper\Zend1
  */
-class Modal extends ZendModal implements Zend_View_Helper_Interface
+class Modal extends ZendModal implements \Zend_View_Helper_Interface
 {
     use Zend1HelperTrait;
 }
