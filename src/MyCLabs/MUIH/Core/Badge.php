@@ -11,9 +11,6 @@ use MyCLabs\MUIH\Core\Traits\AttributesTrait;
  */
 class Badge extends GenericTag
 {
-    use AttributesTrait;
-
-
     /**
      * @param string $content
      */

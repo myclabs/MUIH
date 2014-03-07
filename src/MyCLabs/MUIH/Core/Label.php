@@ -12,8 +12,6 @@ use MyCLabs\MUIH\Core\Traits\AttributesTrait;
  */
 class Label extends GenericTag
 {
-    use AttributesTrait;
-
     const TYPE_DEFAULT = 'default';
     const TYPE_PRIMARY = 'primary';
     const TYPE_SUCCESS = 'success';

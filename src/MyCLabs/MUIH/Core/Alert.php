@@ -11,8 +11,6 @@ use MyCLabs\MUIH\Core\Traits\AttributesTrait;
  */
 class Alert extends GenericTag
 {
-    use AttributesTrait;
-
     const TYPE_SUCCESS = 'success';
     const TYPE_INFO = 'info';
     const TYPE_WARNING = 'warning';

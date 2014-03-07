@@ -17,7 +17,6 @@ class Tab extends GenericTag
      */
     static $defaultAjaxTabLoadingText = 'Loading…';
 
-    use AttributesTrait;
 
     /**
      * @var string

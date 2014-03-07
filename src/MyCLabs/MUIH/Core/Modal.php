@@ -11,8 +11,6 @@ use MyCLabs\MUIH\Core\Traits\AttributesTrait;
  */
 class Modal extends GenericTag
 {
-    use AttributesTrait;
-
     /**
      * @var GenericTag
      */

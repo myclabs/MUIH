@@ -11,8 +11,6 @@ use MyCLabs\MUIH\Core\Traits\AttributesTrait;
  */
 class Collapse extends GenericTag
 {
-    use AttributesTrait;
-
     /**
      * Default is i.glyphicon-chevron-down.
      * @var string
