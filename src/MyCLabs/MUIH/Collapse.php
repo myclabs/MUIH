@@ -153,11 +153,11 @@ class Collapse extends GenericTag
     public function getContentAsString()
     {
         $legend = clone $this->getLegend();
-        $legend->getMainContent()->setAttribute(
+        $legend->setAttribute(
             'href',
-            '#' . $this->getMainContent()->getAttribute('id')
+            '#' . $this->getCollapse()->getAttribute('id')
         );
-        if ($this->getMainContent()->hasClass('in')) {
+        if ($this->getCollapse()->hasClass('in')) {
             $indicator = $this->openedIndicator;
         } else {
             $indicator = $this->closedIndicator;
