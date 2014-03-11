@@ -24,7 +24,7 @@ class GenericTag extends ElementAbstract
     protected $isVoidTag = false;
 
     /**
-     * @var GenericTag|ElementAbstract|string
+     * @var ElementInterface|string
      */
     protected $content;
 
@@ -43,7 +43,7 @@ class GenericTag extends ElementAbstract
     }
 
     /**
-     * @param GenericTag|ElementAbstract|string $content
+     * @param ElementInterface|string $content
      * @return $this
      */
     public function setMainContent($content)
@@ -54,7 +54,7 @@ class GenericTag extends ElementAbstract
     }
 
     /**
-     * @return GenericTag|ElementAbstract|string
+     * @return ElementInterface|string
      */
     public function getMainContent()
     {

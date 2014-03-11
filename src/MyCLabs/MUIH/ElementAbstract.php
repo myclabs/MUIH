@@ -7,7 +7,7 @@ namespace MyCLabs\MUIH;
  * @package    MyCLabs\MUIH
  * @subpackage MUIH
  */
-abstract class ElementAbstract
+abstract class ElementAbstract implements ElementInterface
 {
     /**
      * @return string

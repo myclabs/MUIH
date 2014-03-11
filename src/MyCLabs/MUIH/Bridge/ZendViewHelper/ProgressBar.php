@@ -27,7 +27,7 @@ class ProgressBar
      */
     public function __toString()
     {
-        return $this->uiElement->getHTML();
+        return (string) $this->uiElement;
     }
 
     /**
