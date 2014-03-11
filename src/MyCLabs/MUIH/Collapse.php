@@ -100,7 +100,7 @@ class Collapse extends GenericTag
     public function setLegendContent($legend)
     {
         // legend > a > content.
-        $this->getLegend()->getMainContent()->setMainContent($legend);
+        $this->getLegend()->setMainContent($legend);
 
         return $this;
     }
