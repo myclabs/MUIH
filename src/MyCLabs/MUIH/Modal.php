@@ -60,7 +60,7 @@ class Modal extends GenericTag
         // div.modal-body > content.
         $this->getBody()->setMainContent($content);
 
-        return parent::setMainContent($content);
+        return $this;
     }
 
     /**
