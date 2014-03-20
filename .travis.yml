@@ -1,11 +1,15 @@
 language: php
 
 php:
-  - 5.4
   - 5.5
+  - hhvm
 
 before_script:
-  - wget http://getcomposer.org/composer.phar
-  - php composer.phar install
+  - composer require satooshi/php-coveralls:dev-master --dev --no-interaction --prefer-source
 
-script: phpunit --configuration phpunit.xml tests
+script:
+  - mkdir -p build/logs
+  - phpunit --coverage-clover build/logs/clover.xml
+
+after_script:
+  - php vendor/bin/coveralls -v
