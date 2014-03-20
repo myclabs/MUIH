@@ -114,7 +114,7 @@ class Panel extends GenericTag
     /**
      * {@inheritdoc}
      */
-    public function setContent($content)
+    public function setContent($content=[])
     {
         $this->getBody()->setContent($content);
 
