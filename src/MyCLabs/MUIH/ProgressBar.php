@@ -2,13 +2,17 @@
 
 namespace MyCLabs\MUIH;
 
+use MyCLabs\MUIH\Interfaces\TitleEnhancementInterface;
+use MyCLabs\MUIH\Traits\TitleEnhancementTrait;
+
 /**
  * @author     valentin-mcs
  * @package    MyCLabs\MUIH
- * @subpackage MUIH
  */
-class ProgressBar extends GenericTag
+class ProgressBar extends GenericTag implements TitleEnhancementInterface
 {
+    use TitleEnhancementTrait;
+
     const TYPE_DEFAULT = 'default';
     const TYPE_SUCCESS = 'success';
     const TYPE_INFO = 'info';
@@ -23,22 +27,13 @@ class ProgressBar extends GenericTag
         self::TYPE_DANGER,
     ];
 
-    const STYLE_STRIPED = 'striped';
-    const STYLE_STRIPED_ACTIVE = 'striped active';
-
-    protected $styles = [
-        self::STYLE_STRIPED,
-        self::STYLE_STRIPED_ACTIVE,
-    ];
-
 
     /**
      * @param float $percent 0 <= percent <= 100.
      * @param string $type
-     * @param bool $style
      * @param string $content
      */
-    public function __construct($percent, $type=self::TYPE_DEFAULT, $style=null, $content=null)
+    public function __construct($percent, $type=self::TYPE_DEFAULT, $content=null)
     {
         if ($percent > 100) {
             $percent = 100;
@@ -49,53 +44,31 @@ class ProgressBar extends GenericTag
 
         $this->addClass('progress');
 
-        if (!in_array($style, $this->styles)) {
-            $this->addClass('progress-' . $style);
-        }
-
         if (empty($content)) {
             $content = new GenericTag('span');
             $content->addClass('sr-only');
-            $content->setMainContent($percent . '%');
+            $content->setContent($percent . '%');
         }
 
-        $content = new GenericTag('div');
-        $content->addClass('progress-bar');
+        $this->content = new GenericTag('div');
+        $this->content->addClass('progress-bar');
         if (!in_array($type, $this->types)) {
             $type = self::TYPE_DEFAULT;
         }
         if ($type !== self::TYPE_DEFAULT) {
-            $content->addClass('progress-bar-' . $type);
+            $this->content->addClass('progress-bar-' . $type);
         }
-        $content->setAttribute('role', 'progress');
-        $content->setAttribute('aria-valuenow', $percent);
-        $content->setAttribute('aria-valuemin', 0);
-        $content->setAttribute('aria-valuemax', 100);
-        $content->setAttribute('style', 'width="' . $percent. '%"');
+        $this->content->setAttribute('role', 'progress');
+        $this->content->setAttribute('aria-valuenow', $percent);
+        $this->content->setAttribute('aria-valuemin', 0);
+        $this->content->setAttribute('aria-valuemax', 100);
+        $this->content->setAttribute('style', 'width="' . $percent. '%"');
 
-        parent::__construct('div', false, $content);
+        parent::__construct('div', $content);
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function setMainContent($content)
-    {
-        $this->content->setMainContent($content);
-
-        return parent::setMainContent($content);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getMainContent()
-    {
-        return $this->content->getMainContent();
-    }
-
-    /**
-     * Main content wrapped in a "div.panel-body" GenericTag.
+     * Main content wrapped in a "div.progress-bar > content" GenericTag.
      * @return GenericTag
      */
     public function getBody()
@@ -103,4 +76,72 @@ class ProgressBar extends GenericTag
         return $this->content;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function setContent($content)
+    {
+        $this->getBody()->setContent($content);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prependContent($content)
+    {
+        $this->getBody()->prependContent($content);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function appendContent($content)
+    {
+        $this->getBody()->appendContent($content);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getContent()
+    {
+        return $this->getBody()->getContent();
+    }
+
+    /**
+     * @return $this
+     */
+    public function striped()
+    {
+        $this->addClass('progress-striped');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function activeStriped()
+    {
+        if (!$this->hasClass('progress-striped')) {
+            $this->addClass('progress-striped');
+        }
+        $this->addClass('active');
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContentAsString()
+    {
+        return (string) $this->content;
+    }
 }

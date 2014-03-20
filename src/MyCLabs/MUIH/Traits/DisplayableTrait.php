@@ -1,13 +1,13 @@
 <?php
 
-namespace MyCLabs\MUIH;
+namespace MyCLabs\MUIH\Traits;
 
 /**
  * @author     valentin-mcs
  * @package    MyCLabs\MUIH
- * @subpackage MUIH
+ * @subpackage Traits
  */
-abstract class ElementAbstract implements ElementInterface
+trait DisplayableTrait
 {
     /**
      * @return string
@@ -34,7 +34,9 @@ abstract class ElementAbstract implements ElementInterface
         $render = $this->getHTML();
         $script = $this->getScript();
         if (!empty($script)) {
-            $render .= '<script type="text/javascript">$(document).ready(function(){'.$script.'});</script>';
+            $render .= '<script type="text/javascript">';
+            $render .= '$(document).ready(function(){'.$script. '});';
+            $render .= '</script>';
         }
         return $render;
     }

@@ -1,5 +1,6 @@
 # MUIH
 
+[![Build Status](https://travis-ci.org/myclabs/MUIH.png?branch=master)](https://travis-ci.org/myclabs/MUIH) [![Coverage Status](https://coveralls.io/repos/myclabs/MUIH/badge.png)](https://coveralls.io/r/myclabs/MUIH) [![Latest Stable Version](https://poser.pugx.org/myclabs/muih/v/stable.png)](https://packagist.org/packages/myclabs/muih) [![Total Downloads](https://poser.pugx.org/myclabs/muih/downloads.png)](https://packagist.org/packages/myclabs/muih) [![License](https://poser.pugx.org/myclabs/muih/license.png)](https://packagist.org/packages/myclabs/muih)
 
 MUIH, for Myc-lab User Interface Helper, is a PHP and Javascript library containing helpers for creation of Bootstrap 3 UI elements.
 

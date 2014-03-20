@@ -2,34 +2,44 @@
 
 namespace MyCLabs\MUIH;
 
+use MyCLabs\MUIH\Interfaces\TitleEnhancementInterface;
+use MyCLabs\MUIH\Traits\TitleEnhancementTrait;
+
 /**
  * @author     valentin-mcs
  * @package    MyCLabs\MUIH
- * @subpackage MUIH
  */
-class Well extends GenericTag
+class Well extends GenericTag implements TitleEnhancementInterface
 {
-    const STYLE_SMALL = 'sm';
-    const STYLE_LARGE = 'lg';
-
-    protected $styles = [
-        self::STYLE_SMALL,
-        self::STYLE_LARGE,
-    ];
+    use TitleEnhancementTrait;
 
     /**
      * @param string $content
-     * @param string $style Const Well::STYLE_.
      */
-    public function  __construct($content, $style=null)
+    public function  __construct($content)
     {
         $this->addClass('well');
 
-        if (in_array($style, $this->styles)) {
-            $this->addClass('well-' . $style);
-        }
-
-        parent::__construct('div', false, $content);
+        parent::__construct('div', $content);
     }
 
+    /**
+     * @return $this
+     */
+    public function small()
+    {
+        $this->addClass('well-sm');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function large()
+    {
+        $this->addClass('well-lg');
+
+        return $this;
+    }
 }

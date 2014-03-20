@@ -5,7 +5,7 @@ namespace MyCLabs\MUIH\Traits;
 /**
  * @author     valentin-mcs
  * @package    MyCLabs\MUIH
- * @subpackage MUIH
+ * @subpackage Traits
  */
 trait AttributesTrait
 {
@@ -14,6 +14,15 @@ trait AttributesTrait
      */
     protected $attributes = [];
 
+
+    /**
+     * @param string $attributeName
+     * @return $this
+     */
+    public function setBooleanAttribute($attributeName)
+    {
+        return $this->setAttribute($attributeName, null);
+    }
 
     /**
      * @param string $attributeName
@@ -44,7 +53,7 @@ trait AttributesTrait
      */
     public function hasAttribute($attributeName)
     {
-        return isset($this->attributes[$attributeName]);
+        return array_key_exists($attributeName, $this->attributes);
     }
 
     /**
@@ -57,12 +66,37 @@ trait AttributesTrait
     }
 
     /**
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttributesAsString()
+    {
+        $attributes = '';
+
+        foreach ($this->attributes as $name => $value) {
+            $attributes .= ' ' . $name;
+            if ($value !== null) {
+                $attributes .= '="'.$value.'"';
+            }
+        }
+
+        return $attributes;
+    }
+
+    /**
      * @param $className
      * @return $this
      */
     public function addClass($className)
     {
-        if (!isset($this->attributes['class'])) {
+        if (!$this->hasAttribute('class')) {
             $this->attributes['class'] = '';
         }
         if (!$this->hasClass($className)) {
@@ -82,7 +116,10 @@ trait AttributesTrait
      */
     public function hasClass($className)
     {
-        return preg_match('#' . $className . '(\s|$)#', $this->attributes['class']);
+        if ($this->hasAttribute('class')) {
+            return (preg_match('#' . $className . '(\s|$)#', $this->attributes['class']) > 0);
+        }
+        return false;
     }
 
     /**
@@ -91,7 +128,10 @@ trait AttributesTrait
      */
     public function containsClass($className)
     {
-        return preg_match('#' . $className . '.*(\s|$)#', $this->attributes['class']);
+        if ($this->hasAttribute('class')) {
+            return (preg_match('#' . $className . '.*(\s|$)#', $this->attributes['class']) > 0);
+        }
+        return false;
     }
 
     /**
@@ -100,11 +140,18 @@ trait AttributesTrait
      */
     public function removeClass($className)
     {
-        $this->attributes['class'] = trim(preg_replace(
-                '#' . $className . '(\s|$)#',
-                '',
-                $this->attributes['class']
-            ));
+        if ($this->hasAttribute('class')) {
+            $this->attributes['class'] = trim(
+                preg_replace(
+                    '#' . $className . '(\s|$)#',
+                    '',
+                    $this->attributes['class']
+                )
+            );
+            if (empty($this->attributes['class'])) {
+                $this->unsetAttribute('class');
+            }
+        }
 
         return $this;
     }

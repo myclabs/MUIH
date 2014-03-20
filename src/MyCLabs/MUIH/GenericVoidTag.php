@@ -4,36 +4,37 @@ namespace MyCLabs\MUIH;
 
 use MyCLabs\MUIH\Interfaces\DisplayableInterface;
 use MyCLabs\MUIH\Interfaces\AttributesInterface;
-use MyCLabs\MUIH\Interfaces\ContentInterface;
 use MyCLabs\MUIH\Traits\DisplayableTrait;
 use MyCLabs\MUIH\Traits\AttributesTrait;
-use MyCLabs\MUIH\Traits\ContentTrait;
 
 /**
  * @author     valentin-mcs
  * @package    MyCLabs\MUIH
  */
-class GenericTag implements DisplayableInterface, AttributesInterface, ContentInterface
+class GenericVoidTag implements DisplayableInterface, AttributesInterface
 {
     use DisplayableTrait;
     use AttributesTrait;
-    use ContentTrait;
 
     /**
      * @var string
      */
     protected $tag;
 
+    /**
+     * @var bool
+     */
+    protected $withSelfClosing = false;
+
 
     /**
      * @param string $tag
-     * @param string $content
+     * @param bool $withSelfClosing
      */
-    public function  __construct($tag, $content=null)
+    public function  __construct($tag, $withSelfClosing=false)
     {
         $this->tag = (string) $tag;
-
-        $this->setContent($content);
+        $this->withSelfClosing = (bool) $withSelfClosing;
     }
 
     /**
@@ -47,11 +48,11 @@ class GenericTag implements DisplayableInterface, AttributesInterface, ContentIn
 
         $html .= $this->getAttributesAsString();
 
+        if ($this->withSelfClosing) {
+            $html .= ' /';
+        }
+
         $html .= '>';
-
-        $html .= $this->getContentAsString();
-
-        $html .= '</' . $this->tag . '>';
 
         return $html;
     }

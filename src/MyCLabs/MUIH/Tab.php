@@ -2,12 +2,11 @@
 
 namespace MyCLabs\MUIH;
 
-use MyCLabs\MUIH\Traits\AttributesTrait;
+use MyCLabs\MUIH\Interfaces\DisplayableInterface;
 
 /**
  * @author     valentin-mcs
  * @package    MyCLabs\MUIH
- * @subpackage MUIH
  */
 class Tab extends GenericTag
 {
@@ -19,12 +18,7 @@ class Tab extends GenericTag
 
 
     /**
-     * @var string
-     */
-    protected $id;
-
-    /**
-     * @var string
+     * @var DisplayableInterface|string
      */
     protected $title;
 
@@ -34,7 +28,7 @@ class Tab extends GenericTag
     protected $isAjax;
 
     /**
-     * @var GenericTag|string
+     * @var DisplayableInterface|string
      */
     protected $loadingText;
 
@@ -42,7 +36,7 @@ class Tab extends GenericTag
     /**
      * @param string $id
      * @param string $title
-     * @param string $content
+     * @param string $content Tab content or url.
      * @param bool $isAjax
      */
     public function  __construct($id, $title, $content, $isAjax=false)
@@ -54,7 +48,7 @@ class Tab extends GenericTag
         $this->isAjax = $isAjax;
         $this->loadingText = self::$defaultAjaxTabLoadingText;
 
-        parent::__construct('div', false, $content);
+        parent::__construct('div', $content);
     }
 
     /**
@@ -63,7 +57,7 @@ class Tab extends GenericTag
      */
     public function setTitle($title)
     {
-        $this->setAttribute('title', $title);
+        $this->title = $title;
 
         return $this;
     }

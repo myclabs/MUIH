@@ -2,12 +2,9 @@
 
 namespace MyCLabs\MUIH;
 
-use MyCLabs\MUIH\Traits\AttributesTrait;
-
 /**
  * @author     valentin-mcs
  * @package    MyCLabs\MUIH
- * @subpackage MUIH
  */
 class Collapse extends GenericTag
 {
@@ -26,7 +23,12 @@ class Collapse extends GenericTag
     /**
      * @var GenericTag
      */
-    protected $legend;
+    protected $title;
+
+    /**
+     * @var GenericTag
+     */
+    protected $link;
 
     /**
      * @var string
@@ -41,51 +43,86 @@ class Collapse extends GenericTag
 
     /**
      * @param string $id
+     * @param string $title
      * @param string $content
-     * @param string $legend
      */
-    public function  __construct($id, $content, $legend)
+    public function  __construct($id=null, $title=null, $content=null)
     {
-        $this->addClass('panel');
-
-        $this->legend = new GenericTag('a');
-        $this->legend->setAttribute('data-toggle', 'collapse');
-        $this->legend = new GenericTag('legend', $legend);
-
-        $this->setLegendContent($legend);
-
         $this->setCollapseStateIndicators();
+
+        $this->link = new GenericTag('a', $title);
+        $this->link->setAttribute('data-toggle', 'collapse');
+        $this->title = new GenericTag('legend', $this->link);
 
         $this->content = new GenericTag('div');
         $this->content->addClass('collapse');
         $this->content->setAttribute('id', $id);
 
-        parent::__construct('fieldset', false, $content);
-
+        parent::__construct('fieldset', $content);
     }
 
     /**
-     * {@inheritdoc}
+     * @return $this
      */
-    public function setMainContent($content)
+    public function show()
     {
-        // div.collapse > content.
-        $this->getCollapse()->setMainContent($content);
+        $this->getCollapse()->addClass('in');
 
         return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $openedIndicator
+     * @param string $closedIndicator
+     * @return Collapse
      */
-    public function getMainContent()
+    public function setCollapseStateIndicators($openedIndicator=null, $closedIndicator=null)
     {
-        // div.collapse > content.
-        return $this->getCollapse()->getMainContent();
+        if ($openedIndicator === null) {
+            $this->openedIndicator = self::$defaultOpenedIndicator;
+        } else {
+            $this->openedIndicator = $openedIndicator;
+        }
+        if ($closedIndicator === null) {
+            $this->closedIndicator = self::$defaultClosedIndicator;
+        } else {
+            $this->closedIndicator = $closedIndicator;
+        }
+
+        return $this;
     }
 
     /**
-     * Main content wrapped in a "div.collapse" GenericTag.
+     * Title content wrapped in a "legend > a > titleContent" GenericTag.
+     * @return GenericTag
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Title content wrapped in a "a > titleContent" GenericTag.
+     * @return GenericTag
+     */
+    public function getTitleLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param string $title
+     * @return $this
+     */
+    public function setTitleContent($title)
+    {
+        $this->getTitleLink()->setContent($title);
+
+        return $this;
+    }
+
+    /**
+     * Main content content wrapped in a "div.collapse > content" GenericTag.
      * @return GenericTag
      */
     public function getCollapse()
@@ -94,57 +131,41 @@ class Collapse extends GenericTag
     }
 
     /**
-     * @param string $legend
-     * @return $this
+     * {@inheritdoc}
      */
-    public function setLegendContent($legend)
+    public function setContent($content)
     {
-        // legend > a > content.
-        $this->getLegend()->setMainContent($legend);
+        $this->getCollapse()->setContent($content);
 
         return $this;
     }
 
     /**
-     * Legend content wrapped in a "legend a" GenericTag.
-     * @return GenericTag
+     * {@inheritdoc}
      */
-    public function getLegend()
+    public function prependContent($content)
     {
-        return $this->legend;
-    }
+        $this->getCollapse()->prependContent($content);
 
-    /**
-     * @param null $openedIndicator
-     * @param null $closedIndicator
-     * @return Collapse
-     */
-    public function setCollapseStateIndicators($openedIndicator=null, $closedIndicator=null)
-    {
-        if ($openedIndicator === null) {
-            $this->openedIndicator = self::$defaultOpenedIndicator;
-        }
-        if ($closedIndicator === null) {
-            $this->closedIndicator = self::$defaultClosedIndicator;
-        }
-        
         return $this;
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
-    public function getOpenedIndicator()
+    public function appendContent($content)
     {
-        return $this->openedIndicator;
+        $this->getCollapse()->appendContent($content);
+
+        return $this;
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
-    public function getClosedIndicator()
+    public function getContent()
     {
-        return $this->closedIndicator;
+        return $this->getCollapse()->getContent();
     }
 
     /**
@@ -152,8 +173,22 @@ class Collapse extends GenericTag
      */
     public function getContentAsString()
     {
-        $legend = clone $this->getLegend();
-        $legend->setAttribute(
+        $title = clone $this->getTitle();
+        $titleContents = [];
+        foreach ($title->getContent() as $titleContent) {
+            $clone = clone $titleContent;
+            if ($titleContent === $this->link) {
+                $link = $clone;
+            }
+            $titleContents[] = $clone;
+        }
+        $title->setContent($titleContents);
+        /** @var GenericTag $link */
+        if (!isset($link)) {
+            $link = clone $this->link;
+            $title->appendContent($link);
+        }
+        $link->setAttribute(
             'href',
             '#' . $this->getCollapse()->getAttribute('id')
         );
@@ -162,9 +197,8 @@ class Collapse extends GenericTag
         } else {
             $indicator = $this->closedIndicator;
         }
-        $legend->setMainContent($indicator . $legend->getMainContent());
-        
-        return (string) $legend . $this->content;
-    }
+        $link->setContent($indicator . $link->getContentAsString());
 
-} 
+        return (string) $title . $this->content;
+    }
+}

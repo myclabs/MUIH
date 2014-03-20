@@ -2,12 +2,9 @@
 
 namespace MyCLabs\MUIH;
 
-use MyCLabs\MUIH\Traits\AttributesTrait;
-
 /**
  * @author     valentin-mcs
  * @package    MyCLabs\MUIH
- * @subpackage MUIH
  */
 class Panel extends GenericTag
 {
@@ -44,7 +41,7 @@ class Panel extends GenericTag
      * @param string $footer
      * @param string $type Const Panel::TYPE_.
      */
-    public function  __construct($content, $header=null, $footer=null, $type=self::TYPE_DEFAULT)
+    public function  __construct($content=null, $header=null, $footer=null, $type=self::TYPE_DEFAULT)
     {
         $this->addClass('panel');
 
@@ -53,65 +50,20 @@ class Panel extends GenericTag
         }
         $this->addClass('panel-' . $type);
 
-        $this->header = new GenericTag('div');
+        $this->header = new GenericTag('div', $header);
         $this->header->addClass('panel-header');
 
-        $this->setHeaderContent($header);
-
-        $this->footer = new GenericTag('div');
+        $this->footer = new GenericTag('div', $footer);
         $this->footer->addClass('panel-footer');
-
-        $this->setFooterContent($footer);
 
         $this->content= new GenericTag('div');
         $this->content->addClass('panel-body');
 
-        parent::__construct('div', false, $content);
+        parent::__construct('div', $content);
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function setMainContent($content)
-    {
-        // div.panel-body > content.
-        $this->getBody()->setMainContent($content);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getMainContent()
-    {
-        // div.panel-body > content.
-        return $this->getBody()->getMainContent();
-    }
-
-    /**
-     * Main content wrapped in a "div.panel-body" GenericTag.
-     * @return GenericTag
-     */
-    public function getBody()
-    {
-        return $this->content;
-    }
-
-    /**
-     * @param string $header
-     * @return $this
-     */
-    public function setHeaderContent($header)
-    {
-        // div.panel-header > content.
-        $this->getHeader()->setMainContent($header);
-        
-        return $this;
-    }
-
-    /**
-     * Header content wrapped in a "div.panel-header" GenericTag.
+     * Header content wrapped in a "div.panel-header > headerContent" GenericTag.
      * @return GenericTag
      */
     public function getHeader()
@@ -120,24 +72,81 @@ class Panel extends GenericTag
     }
 
     /**
-     * @param string $footer
+     * @param string $header
      * @return $this
      */
-    public function setFooterContent($footer)
+    public function setHeaderContent($header)
     {
-        // div.panel-footer > content.
-        $this->getFooter($footer);
-        
+        $this->getHeader()->setContent($header);
+
         return $this;
     }
 
     /**
-     * Footer content wrapped in a "div.panel-header" GenericTag.
+     * Footer content wrapped in a "div.panel-footer > footerContent" GenericTag.
      * @return GenericTag
      */
     public function getFooter()
     {
         return $this->footer;
+    }
+
+    /**
+     * @param string $footer
+     * @return $this
+     */
+    public function setFooterContent($footer)
+    {
+        $this->getFooter()->setContent($footer);
+
+        return $this;
+    }
+
+    /**
+     * Main content wrapped in a "div.panel-body > content" GenericTag.
+     * @return GenericTag
+     */
+    public function getBody()
+    {
+        return $this->content;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setContent($content)
+    {
+        $this->getBody()->setContent($content);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prependContent($content)
+    {
+        $this->getBody()->prependContent($content);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function appendContent($content)
+    {
+        $this->getBody()->appendContent($content);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getContent()
+    {
+        return $this->getBody()->getContent();
     }
 
     /**
@@ -147,17 +156,16 @@ class Panel extends GenericTag
     {
         $content = '';
 
-        if (!empty($this->getHeader()->getMainContent())) {
-            $content .= $this->getHeader();
+        if (!empty($this->getHeader()->getContent())) {
+            $content .= (string) $this->getHeader();
         }
 
-        $content .= $this->getBody();
+        $content .= (string) $this->content;
 
-        if (!empty($this->getFooter()->getMainContent())) {
-            $content .= $this->getFooter();
+        if (!empty($this->getFooter()->getContent())) {
+            $content .= (string) $this->getFooter();
         }
 
-        return (string) $content;
+        return $content;
     }
-
-} 
+}

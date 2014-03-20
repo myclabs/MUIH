@@ -2,13 +2,27 @@
 
 namespace MyCLabs\MUIH;
 
+use MyCLabs\MUIH\Interfaces\DisplayableInterface;
+use MyCLabs\MUIH\Interfaces\AttributesInterface;
+use MyCLabs\MUIH\Interfaces\TitleEnhancementInterface;
+use MyCLabs\MUIH\Traits\DisplayableTrait;
+use MyCLabs\MUIH\Traits\AttributesTrait;
+use MyCLabs\MUIH\Traits\TitleEnhancementTrait;
+
 /**
  * @author     valentin-mcs
  * @package    MyCLabs\MUIH
- * @subpackage MUIH
  */
-class Icon extends ElementAbstract
+class Icon implements DisplayableInterface, AttributesInterface, TitleEnhancementInterface
 {
+    use DisplayableTrait;
+    use AttributesTrait;
+    use TitleEnhancementTrait;
+
+    const GLYPHICON = 'glyphicon glyphicon-';
+    const FONT_AWESOME = 'fa fa-';
+
+    public static $defaultIconPrefix = self::GLYPHICON;
 
     /**
      * @var string
@@ -17,35 +31,53 @@ class Icon extends ElementAbstract
 
 
     /**
-     * @param string $iconName
+     * @param string       $iconName
+     * @param bool|string  $withPrefix Default true for default, can be a string.
      */
-    public function  __construct($iconName=null)
+    public function  __construct($iconName=null, $withPrefix=true)
     {
-        $this->setIconName($iconName);
+        $this->setIconName($iconName, $withPrefix);
     }
 
     /**
-     * @param $iconName
-     * @return Icon
+     * @param string       $iconName
+     * @param bool|string  $withPrefix Default true for default, can be a string.
+     * @return $this
      */
-    public function setIconName($iconName)
+    public function setIconName($iconName, $withPrefix=true)
     {
         $this->iconName = $iconName;
+        if ($withPrefix === true) {
+            $this->iconName = self::$defaultIconPrefix . $this->iconName;
+        } else if (is_string($withPrefix)) {
+            $this->iconName = $withPrefix . $this->iconName;
+        }
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return $this
      */
-    public function getIconName()
+    public function glyphicon()
     {
-        return $this->iconName;
+        $this->iconName = self::GLYPHICON . $this->iconName;
+
+        return $this;
     }
 
+    /**
+     * @return $this
+     */
+    public function fontAwesome()
+    {
+        $this->iconName = self::FONT_AWESOME . $this->iconName;
+
+        return $this;
+    }
 
     /**
-     * {@inheritdoc}
+     * {@inheritdoc}.
      */
     public function getHTML()
     {
@@ -53,7 +85,18 @@ class Icon extends ElementAbstract
 
         $html .= '<i';
 
-        $html .= ' class="' . $this->iconName . '"';
+        if (!isset($this->attributes['class'])) {
+            $html .= ' class="' . $this->iconName . '"';
+        }
+        foreach ($this->attributes as $name => $value) {
+            if ($name === 'class') {
+                $value = $this->iconName . ' ' . $value;
+            }
+            $html .= ' ' . $name;
+            if ($value !== null) {
+                $html .= '="'.$value.'"';
+            }
+        }
 
         $html .= '>';
 
@@ -61,5 +104,4 @@ class Icon extends ElementAbstract
 
         return $html;
     }
-
 }

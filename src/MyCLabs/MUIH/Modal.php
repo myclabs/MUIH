@@ -2,15 +2,13 @@
 
 namespace MyCLabs\MUIH;
 
-use MyCLabs\MUIH\Traits\AttributesTrait;
-
 /**
  * @author     valentin-mcs
  * @package    MyCLabs\MUIH
- * @subpackage MUIH
  */
 class Modal extends GenericTag
 {
+
     /**
      * @var GenericTag
      */
@@ -20,6 +18,16 @@ class Modal extends GenericTag
      * @var GenericTag
      */
     protected $footer;
+
+    /**
+     * @var GenericTag
+     */
+    protected $body;
+
+    /**
+     * @var GenericTag
+     */
+    protected $modalContent;
 
     /**
      * @var GenericTag|string
@@ -32,69 +40,42 @@ class Modal extends GenericTag
      * @param string $header
      * @param string $footer
      */
-    public function  __construct($content, $header=null, $footer=null)
+    public function  __construct($content=null, $header=null, $footer=null)
     {
         $this->addClass('modal');
 
-        $this->header = new GenericTag('div');
+        $this->header = new GenericTag('div', $header);
         $this->header->addClass('modal-header');
 
-        $this->setHeaderContent($header);
-
-        $this->footer = new GenericTag('div');
+        $this->footer = new GenericTag('div', $footer);
         $this->footer->addClass('modal-footer');
 
-        $this->setFooterContent($footer);
+        $this->body = new GenericTag('div');
+        $this->body->addClass('modal-body');
 
-        $this->content = new GenericTag('div');
-        $this->content->addClass('modal-body');
+        $this->modalContent = new GenericTag('div', $this->body);
+        $this->modalContent->addClass('modal-content');
 
-        parent::__construct('div', false, $content);
-    }
+        $this->content = new GenericTag('div', $this->modalContent);
+        $this->content->addClass('modal-dialog');
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setMainContent($content)
-    {
-        // div.modal-body > content.
-        $this->getBody()->setMainContent($content);
 
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getMainContent()
-    {
-        // div.modal-body > content.
-        return $this->getBody()->getMainContent();
-    }
-
-    /**
-     * Main content wrapped in a "div.modal-body" GenericTag.
-     * @return GenericTag
-     */
-    public function getBody()
-    {
-        return $this->content;
+        parent::__construct('div', $content);
     }
 
     /**
      * @param string $header
      * @return $this
      */
-    public function setHeaderContent($header = null)
+    public function setHeaderContent($header)
     {
-        // div.modal-header > content.
-        $this->getHeader()->setMainContent($header);
+        $this->getHeader()->setContent($header);
 
         return $this;
     }
 
     /**
-     * Header content wrapped in a "div.modal-header" GenericTag.
+     * Header content wrapped in a "div.modal-header > headerContent" GenericTag.
      * @return GenericTag
      */
     public function getHeader()
@@ -108,14 +89,13 @@ class Modal extends GenericTag
      */
     public function setFooterContent($footer)
     {
-        // div.modal-footer > content.
-        $this->getFooter()->setMainContent($footer);
-        
+        $this->getFooter()->setContent($footer);
+
         return $this;
     }
 
     /**
-     * Footer content wrapped in a "div.modal-header" GenericTag.
+     * Footer content wrapped in a "div.modal-footer > footerContent" GenericTag.
      * @return GenericTag
      */
     public function getFooter()
@@ -124,29 +104,126 @@ class Modal extends GenericTag
     }
 
     /**
+     * Main content wrapped in a "div.modal-dialog > div.modal-content > div.modal-body > content" GenericTag.
+     * @return GenericTag
+     */
+    public function getModalDialog()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Main content wrapped in a "div.modal-content > div.modal-body > content" GenericTag.
+     * @return GenericTag
+     */
+    public function getModalContent()
+    {
+        return $this->modalContent;
+    }
+
+    /**
+     * Main content wrapped in a "div.modal-body > content" GenericTag.
+     * @return GenericTag
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setContent($content)
+    {
+        $this->getBody()->setContent($content);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prependContent($content)
+    {
+        $this->getBody()->prependContent($content);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function appendContent($content)
+    {
+        $this->getBody()->appendContent($content);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getContent()
+    {
+        return $this->getBody()->getContent();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getContentAsString()
     {
-        $content = '';
-
-        if (!empty($this->getHeader()->getMainContent())) {
-            $content .= $this->getHeader();
+        $modalContent = clone $this->getModalContent();
+        if (!empty($this->getHeader()->getContent())) {
+            $modalContent->prependContent($this->getHeader());
+        }
+        if (!empty($this->getFooter()->getContent())) {
+            $modalContent->appendContent($this->getFooter());
         }
 
-        $content .= $this->getBody();
-
-        if (!empty($this->getFooter()->getMainContent())) {
-            $content .= $this->getFooter();
-        }
-
-        $modalContent = new GenericTag('div', false, $content);
-        $modalContent->addClass('modal-content');
-
-        $modalDialog = new GenericTag('div', false, $modalContent);
-        $modalDialog->addClass('modal-dialog');
+        $modalDialog = clone $this->getModalDialog();
+        $modalDialog->setContent($modalContent);
 
         return (string) $modalDialog;
     }
 
-} 
+    /**
+     * @return $this
+     */
+    public function small()
+    {
+        $this->getModalDialog()->addClass('modal-sm');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function large()
+    {
+        $this->getModalDialog()->addClass('modal-lg');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setBackdropStatic()
+    {
+        $this->setAttribute('data-backdrop', 'static');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function removeBackdrop()
+    {
+        $this->setAttribute('data-backdrop', 'false');
+
+        return $this;
+    }
+}

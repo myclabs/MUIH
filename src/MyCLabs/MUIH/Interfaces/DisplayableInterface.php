@@ -1,13 +1,13 @@
 <?php
 
-namespace MyCLabs\MUIH;
+namespace MyCLabs\MUIH\Interfaces;
 
 /**
  * @author     valentin-mcs
  * @package    MyCLabs\MUIH
- * @subpackage MUIH
+ * @subpackage Interfaces
  */
-interface ElementInterface
+interface DisplayableInterface
 {
     /**
      * @return string

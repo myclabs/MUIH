@@ -3,16 +3,22 @@
 namespace MyCLabs\MUIH;
 
 use Exception;
+use MyCLabs\MUIH\Interfaces\DisplayableInterface;
+use MyCLabs\MUIH\Interfaces\AttributesInterface;
+use MyCLabs\MUIH\Interfaces\ContentInterface;
+use MyCLabs\MUIH\Traits\DisplayableTrait;
 use MyCLabs\MUIH\Traits\AttributesTrait;
+use MyCLabs\MUIH\Traits\ContentTrait;
 
 /**
  * @author     valentin-mcs
  * @package    MyCLabs\MUIH
- * @subpackage MUIH
  */
-class Button extends ElementAbstract
+class Button implements DisplayableInterface, AttributesInterface, ContentInterface
 {
+    use DisplayableTrait;
     use AttributesTrait;
+    use ContentTrait;
 
     const TYPE_DEFAULT = 'default';
     const TYPE_PRIMARY = 'primary';
@@ -32,11 +38,6 @@ class Button extends ElementAbstract
         self::TYPE_LINK,
     ];
 
-    /**
-     * @var string
-     */
-    protected $content;
-
 
     /**
      * @param string $content
@@ -44,32 +45,89 @@ class Button extends ElementAbstract
      */
     public function  __construct($content=null, $type=self::TYPE_DEFAULT)
     {
-        $this->content = $content;
-
         $this->addClass('btn');
-        $this->setType($type);
+        $this->changeType($type);
+
+        $this->setContent($content);
     }
 
     /**
      * @param $type
      * @throws Exception
-     * @return Button
+     * @return $this
      */
-    public function setType($type)
+    public function changeType($type)
     {
         if (!in_array($type, $this->types)) {
-            throw new Exception('A valid type is needed, see Button::TYPE_.');
+            throw new Exception('A valid type is needed, @see Button::TYPE_.');
         }
 
         if (!$this->containsClass('btn-')) {
             $this->attributes['class'] .= ' btn-' . $type;
         } else {
             $this->attributes['class'] = preg_replace(
-                '#btn-(\w_-)+#',
+                '#btn-[\w-]+#',
                 'btn-' . $type,
                 $this->attributes['class']
             );
         }
+
+        return $this;
+    }
+
+    /**
+     * @param string $url
+     * @param string $target
+     * @return $this
+     */
+    public function link($url, $target=null)
+    {
+        $this->setAttribute('href', $url);
+        if ($target !== null) {
+            $this->setAttribute('target', $target);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $idModal
+     * @return $this
+     */
+    public function showModal($idModal)
+    {
+        $this->setAttribute('href', '#');
+        $this->setAttribute('data-toggle', 'modal');
+        $this->setAttribute('data-remote', 'false');
+        $this->setAttribute('data-target', '#'.$idModal);
+
+        return $this;
+    }
+
+    /**
+     * @param string $idModal
+     * @param string $url
+     * @return $this
+     */
+    public function showAjaxModal($idModal, $url)
+    {
+        $this->showModal($idModal);
+
+        $this->setAttribute('href', $url);
+        $this->setAttribute('data-remote', 'true');
+
+        return $this;
+    }
+
+    /**
+     * @param string $idModal
+     * @return $this
+     */
+    public function closeModal($idModal)
+    {
+        $this->setAttribute('href', '#');
+        $this->setAttribute('data-dismiss', 'modal');
+        $this->setAttribute('data-target', '#'.$idModal);
 
         return $this;
     }
@@ -85,20 +143,17 @@ class Button extends ElementAbstract
 
         $html .= '<' . $tag;
 
-        foreach ($this->attributes as $name => $value) {
-            $html .= ' ' . $name.'="'.$value.'"';
-        }
+        $html .= $this->getAttributesAsString();
         if (!isset($this->attributes['href']) && !isset($this->attributes['type'])) {
             $html .= ' type="button"';
         }
 
         $html .= '>';
 
-        $html .= $this->content;
+        $html .= $this->getContentAsString();
 
         $html .= '</' . $tag . '>';
 
         return $html;
     }
-
 }

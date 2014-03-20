@@ -3,15 +3,17 @@
 namespace MyCLabs\MUIH;
 
 use Exception;
-use MyCLabs\MUIH\Traits\AttributesTrait;
+use MyCLabs\MUIH\Bridge\ZendViewHelper\Traits\TitleEnhancementTrait;
+use MyCLabs\MUIH\Interfaces\TitleEnhancementInterface;
 
 /**
  * @author     valentin-mcs
  * @package    MyCLabs\MUIH
- * @subpackage MUIH
  */
-class Label extends GenericTag
+class Label extends GenericTag implements TitleEnhancementInterface
 {
+    use TitleEnhancementTrait;
+
     const TYPE_DEFAULT = 'default';
     const TYPE_PRIMARY = 'primary';
     const TYPE_SUCCESS = 'success';
@@ -36,9 +38,9 @@ class Label extends GenericTag
     public function  __construct($content, $type=self::TYPE_DEFAULT)
     {
         $this->addClass('label');
-        $this->setType($type);
+        $this->changeType($type);
 
-        parent::__construct('span', false, $content);
+        parent::__construct('span', $content);
     }
 
     /**
@@ -46,17 +48,17 @@ class Label extends GenericTag
      * @throws Exception
      * @return $this
      */
-    public function setType($type)
+    public function changeType($type)
     {
         if (!in_array($type, $this->types)) {
-            throw new Exception('A valid type is needed, see Label::TYPE_.');
+            throw new Exception('A valid type is needed, @see Label::TYPE_.');
         }
 
         if (!$this->containsClass('label-')) {
             $this->attributes['class'] .= ' label-' . $type;
         } else {
             $this->attributes['class'] = preg_replace(
-                '#label-(\w_-)+#',
+                '#label-[\w-]+#',
                 'label-' . $type,
                 $this->attributes['class']
             );
@@ -64,5 +66,4 @@ class Label extends GenericTag
 
         return $this;
     }
-
 }

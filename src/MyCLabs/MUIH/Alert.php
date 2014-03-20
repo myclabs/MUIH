@@ -2,12 +2,9 @@
 
 namespace MyCLabs\MUIH;
 
-use MyCLabs\MUIH\Traits\AttributesTrait;
-
 /**
  * @author     valentin-mcs
  * @package    MyCLabs
- * @subpackage MUIH
  */
 class Alert extends GenericTag
 {
@@ -16,6 +13,8 @@ class Alert extends GenericTag
     const TYPE_WARNING = 'warning';
     const TYPE_DANGER = 'danger';
 
+    public static $defaultDismiss = '<button type="button" data-dismiss="alert" aria-hidden="true">&times;</button>';
+
     protected $types = [
         self::TYPE_SUCCESS,
         self::TYPE_INFO,
@@ -23,18 +22,13 @@ class Alert extends GenericTag
         self::TYPE_DANGER,
     ];
 
-    /**
-     * @var GenericTag|string
-     */
-    protected $dismissButton;
-
 
     /**
      * @param string $content
      * @param string $type Const Alert::TYPE_.
      * @param bool   $withDismissButton Default is true.
      */
-    public function  __construct($content, $type=self::TYPE_INFO, $withDismissButton=true)
+    public function  __construct($content=null, $type=self::TYPE_INFO, $withDismissButton=true)
     {
         $this->addClass('alert');
 
@@ -43,75 +37,42 @@ class Alert extends GenericTag
         }
         $this->addClass('alert-' . $type);
 
+        parent::__construct('div', $content);
+
         if ($withDismissButton) {
-            $this->setDefaultDismissButton();
+            $this->addDefaultDismissButton();
         }
-
-        parent::__construct('div', false, $content);
     }
 
     /**
-     * @return bool
+     * @return $this
      */
-    public function getWithDismissButton()
+    public function addDefaultDismissButton()
     {
-        return !empty($this->dismissButton);
-    }
-
-    /**
-     * @return Alert
-     */
-    public function setDefaultDismissButton()
-    {
-        $this->addClass('alert-dismissable');
-
-        $this->dismissButton = new GenericTag('button', '&times;');
-        $this->dismissButton->setAttribute('type', 'button');
-        $this->dismissButton->setAttribute('data-dismiss', 'alert');
-        $this->dismissButton->setAttribute('aria-hidden', 'true');
+        $this->prependContent(self::$defaultDismiss);
 
         return $this;
     }
 
     /**
      * @param GenericTag|string $dismissButton
-     * @return Alert
+     * @return $this
      */
-    public function setDismissButton($dismissButton)
+    public function addDismissButton($dismissButton)
     {
-        if (!empty($dismissButton)) {
-            $this->addClass('alert-dismissable');
-        } else {
-            $this->removeClass('alert-dismissable');
-        }
-
-        $this->dismissButton = $dismissButton;
+        $this->prependContent($dismissButton);
 
         return $this;
     }
 
     /**
-     * @return GenericTag|string
+     * @param string $title
+     * @return $this
      */
-    public function getDismissButton()
+    public function addTitle($title)
     {
-        return $this->dismissButton;
+        $this->prependContent(new GenericTag('strong', $title));
+
+        return $this;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getContentAsString()
-    {
-        $content = '';
-
-        if ($this->getWithDismissButton()) {
-            $content .= $this->dismissButton;
-        }
-
-        $content .= $this->content;
-
-        return $content;
-    }
-
 }

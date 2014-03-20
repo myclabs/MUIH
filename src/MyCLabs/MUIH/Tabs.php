@@ -2,21 +2,16 @@
 
 namespace MyCLabs\MUIH;
 
-use MyCLabs\MUIH\Traits\AttributesTrait;
-
 /**
  * @author     valentin-mcs
  * @package    MyCLabs\MUIH
- * @subpackage MUIH
  */
-class Tabs extends ElementAbstract
+class Tabs
 {
-    use AttributesTrait;
-
     /**
      * @var Tab[]
      */
-    protected $tabs;
+    protected $tabs = [];
 
     /**
      * @var GenericTag
@@ -26,63 +21,19 @@ class Tabs extends ElementAbstract
     /**
      * @var GenericTag
      */
-    protected $TabsNav;
+    protected $tabsNav;
 
 
+    /**
+     */
     public function __construct()
     {
+        $this->tabsNav = new GenericTag('ul', false);
+        $this->tabsNav->addClass('nav');
+        $this->tabsNav->addClass('nav-tabs');
+
         $this->tabsContent = new GenericTag('div', false);
         $this->tabsContent->addClass('tab-content');
-
-        $this->TabsNav = new GenericTag('ul', false);
-        $this->TabsNav->addClass('nav');
-        $this->TabsNav->addClass('nav-tabs');
-    }
-
-    /**
-     * GenericTab "div.tab-content" without content.
-     * @return GenericTag
-     */
-    public function getTabsContent()
-    {
-        return $this->tabsContent;
-    }
-
-    /**
-     * GenericTab "div.tab-content" with all tabs as content.
-     * @return GenericTag
-     */
-    public function getTabsContentAString()
-    {
-        return (string) $this->tabsContent->setMainContent(implode('', $this->tabs));
-    }
-
-    /**
-     * GenericTab "ul.nav-tabs" without content.
-     * @return GenericTag
-     */
-    public function getTabsNav()
-    {
-        return $this->TabsNav;
-    }
-
-    /**
-     * GenericTab "ul.nav-tabs" with links to all tabs as content.
-     * @return GenericTag
-     */
-    public function getTabsNavAString()
-    {
-        $list = '';
-        foreach ($this->tabs as $tab) {
-            $a = new GenericTag('a', false, $tab->getTitle());
-            $a->setAttribute('href', '#' . $tab->getAttribute('id'));
-            $a->setAttribute('data-toggle', 'tab');
-            if ($tab->isAjax()) {
-                $a->setAttribute('data-ajax', $tab->getMainContent());
-            }
-            $list .= (string) new GenericTag('li', false, $a);
-        }
-        return (string) $this->TabsNav->setMainContent(implode('', $list));
     }
 
     /**
@@ -103,13 +54,36 @@ class Tabs extends ElementAbstract
      */
     public function addTab(Tab $tab)
     {
-        $this->tabs[$tab->getAttribute('id')] = $tab;
+        $this->tabs[] = $tab;
 
         return $this;
     }
 
     /**
-     * @param string|Tab $tabId
+     * @param Tab|string $tabId
+     * @return bool
+     */
+    public function hasTab($tabId)
+    {
+        if ($tabId instanceof Tab) {
+            foreach ($this->tabs as $tab) {
+                if ($tab === $tabId) {
+                    return true;
+                }
+            }
+        } else {
+            foreach ($this->tabs as $tab) {
+                if ($tab->getAttribute('id') === $tabId) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param Tab|string $tabId
      * @return $this
      */
     public function removeTab($tabId)
@@ -118,24 +92,13 @@ class Tabs extends ElementAbstract
             $tabId = $tabId->getAttribute('id');
         }
 
-        if ($this->hasTab($tabId)) {
-            unset($this->tabs[$tabId]);
+        foreach ($this->tabs as $tabIndex => $tab) {
+            if ($tab->getAttribute('id') === $tabId) {
+                unset($this->tabs[$tabIndex]);
+            }
         }
 
         return $this;
-    }
-
-    /**
-     * @param string|Tab $tabId
-     * @return bool
-     */
-    public function hasTab($tabId)
-    {
-        if ($tabId instanceof Tab) {
-            $tabId = $tabId->getAttribute('id');
-        }
-
-        return isset($this->tabs[$tabId]);
     }
 
     /**
@@ -144,7 +107,69 @@ class Tabs extends ElementAbstract
      */
     public function getTab($tabId)
     {
-        return ($this->hasTab($tabId) ? $this->tabs[$tabId] : null);
+        foreach ($this->tabs as $tab) {
+            if ($tab->getAttribute('id') === $tabId) {
+                return $tab;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @return Tab[]
+     */
+    public function getTabs()
+    {
+        return $this->tabs;
+    }
+
+    /**
+     * GenericTab "div.tab-content" where all tab contents will be put.
+     * @return GenericTag
+     */
+    public function getTabsContent()
+    {
+        return $this->tabsContent;
+    }
+
+    /**
+     * GenericTab "div.tab-content" with content for all tabs as content.
+     * @return string
+     */
+    public function getTabsContentAsString()
+    {
+        $tabsContent = clone $this->tabsContent;
+        return (string) $tabsContent->setContent($this->tabs);
+    }
+
+    /**
+     * GenericTab "ul.nav-tabs" where all tab navigation links will be put.
+     * @return GenericTag
+     */
+    public function getTabsNav()
+    {
+        return $this->tabsNav;
+    }
+
+    /**
+     * GenericTab "ul.nav-tabs" with navigation links for all tabs as content.
+     * @return string
+     */
+    public function getTabsNavAsString()
+    {
+        $list = [];
+        foreach ($this->tabs as $tab) {
+            $a = new GenericTag('a', $tab->getTitle());
+            $a->setAttribute('href', '#' . $tab->getAttribute('id'));
+            $a->setAttribute('data-toggle', 'tab');
+            if ($tab->isAjax()) {
+                $a->setAttribute('data-ajax', $tab->getContent());
+            }
+            $list[] = new GenericTag('li', $a);
+        }
+        $tabsNav = clone $this->tabsNav;
+        return (string) $tabsNav->setContent($list);
     }
 
     /**
@@ -152,7 +177,6 @@ class Tabs extends ElementAbstract
      */
     public function getHTML()
     {
-        return $this->getTabsNavAString() . $this->getTabsContentAString();
+        return $this->getTabsNavAsString() . $this->getTabsContentAsString();
     }
-
 }
