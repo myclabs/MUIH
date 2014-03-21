@@ -12,11 +12,6 @@ use MyCLabs\MUIH\Traits\TitleEnhancementTrait as MUIHTitleEnhancementTrait;
 trait TitleEnhancementTrait
 {
     /**
-     * @var MUIHTitleEnhancementTrait
-     */
-    protected $uiElement;
-
-    /**
      * @param string $title
      * @param string $placement
      * @param string $trigger

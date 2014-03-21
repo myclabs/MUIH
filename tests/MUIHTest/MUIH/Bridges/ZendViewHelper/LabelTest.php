@@ -7,7 +7,7 @@ use MyCLabs\MUIH\Bridge\ZendViewHelper\Label;
 use MyCLabs\MUIH\Label as MUIHLabel;
 
 /**
- * @covers MyCLabs\MUIH\Bridges\ZendViewHelper\Label
+ * @covers MyCLabs\MUIH\Bridge\ZendViewHelper\Label
  */
 class LabelTest extends \PHPUnit_Framework_TestCase
 {

@@ -13,11 +13,6 @@ use MyCLabs\MUIH\Icon as MUIHIcon;
 trait IconContentTrait
 {
     /**
-     * @var MUIHContentTrait
-     */
-    protected $uiElement;
-
-    /**
      * @param string $icon
      * @return $this
      */

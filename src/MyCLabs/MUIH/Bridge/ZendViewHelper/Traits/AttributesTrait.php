@@ -12,12 +12,6 @@ use MyCLabs\MUIH\Traits\AttributesTrait as MUIHAttributesTrait;
 trait AttributesTrait
 {
     /**
-     * @var MUIHAttributesTrait
-     */
-    protected $uiElement;
-
-
-    /**
      * @param array $attributes
      * @return $this
      */
