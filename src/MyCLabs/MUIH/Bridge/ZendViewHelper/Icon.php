@@ -30,11 +30,12 @@ class Icon
 
     /**
      * @param string $iconName
+     * @param bool   $withPrefix
      * @return $this
      */
-    public function icon($iconName)
+    public function icon($iconName, $withPrefix=true)
     {
-        $this->uiElement = new MUIHIcon($iconName);
+        $this->uiElement = new MUIHIcon($iconName, $withPrefix);
 
         return $this;
     }
@@ -44,7 +45,7 @@ class Icon
      */
     public function glyphicon()
     {
-        $this->uiElement->setIconName('glyphicon glyphicon-' . $this->uiElement->getIconName());
+        $this->uiElement->glyphicon();
 
         return $this;
     }
@@ -54,9 +55,8 @@ class Icon
      */
     public function fa()
     {
-        $this->uiElement->setIconName('fa fa-' . $this->uiElement->getIconName());
+        $this->uiElement->fontAwesome();
 
         return $this;
     }
-
 }

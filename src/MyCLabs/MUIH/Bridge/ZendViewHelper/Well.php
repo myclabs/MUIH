@@ -40,5 +40,4 @@ class Well
 
         return $this;
     }
-
 }

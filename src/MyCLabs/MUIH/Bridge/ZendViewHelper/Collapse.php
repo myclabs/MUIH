@@ -31,12 +31,12 @@ class Collapse
     /**
      * @param string $id
      * @param string $content
-     * @param string $legend
+     * @param string $title
      * @return $this
      */
-    public function collapse($id, $content, $legend)
+    public function collapse($id, $content, $title)
     {
-        $this->uiElement = new MUIHCollapse($id, $content, $legend);
+        $this->uiElement = new MUIHCollapse($id, $content, $title);
 
         return $this;
     }
@@ -46,9 +46,8 @@ class Collapse
      */
     public function shown()
     {
-        $this->uiElement->addClass('in');
+        $this->uiElement->show();
 
         return $this;
     }
-
 }

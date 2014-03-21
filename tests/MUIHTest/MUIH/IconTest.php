@@ -10,17 +10,6 @@ use MyCLabs\MUIH\Icon;
  */
 class IconTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Sets up the fixture.
-     *
-     * This method is called before a test is executed.
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-    }
-
     public function testDefault()
     {
         $tag = new Icon('foo');

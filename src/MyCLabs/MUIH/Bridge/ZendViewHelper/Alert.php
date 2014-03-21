@@ -3,7 +3,6 @@
 namespace MyCLabs\MUIH\Bridge\ZendViewHelper;
 
 use MyCLabs\MUIH\Alert as MUIHAlert;
-use MyCLabs\MUIH\GenericTag as MUIHGenericTag;
 use MyCLabs\MUIH\Bridge\ZendViewHelper\Traits\AttributesTrait;
 
 /**
@@ -48,11 +47,8 @@ class Alert
      */
     public function withTitle($title)
     {
-        $this->uiElement->setMainContent(
-            new MUIHGenericTag('strong', false, $title) . $this->uiElement->getMainContent()
-        );
+        $this->uiElement->addTitle($title);
 
         return $this;
     }
-
 }

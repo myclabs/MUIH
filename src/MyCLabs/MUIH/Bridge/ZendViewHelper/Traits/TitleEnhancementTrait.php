@@ -2,7 +2,7 @@
 
 namespace MyCLabs\MUIH\Bridge\ZendViewHelper\Traits;
 
-use MyCLabs\MUIH\Traits\AttributesTrait as MUIHAttributesTrait;
+use MyCLabs\MUIH\Traits\TitleEnhancementTrait as MUIHTitleEnhancementTrait;
 
 /**
  * @author     valentin-mcs
@@ -12,10 +12,9 @@ use MyCLabs\MUIH\Traits\AttributesTrait as MUIHAttributesTrait;
 trait TitleEnhancementTrait
 {
     /**
-     * @var MUIHAttributesTrait
+     * @var MUIHTitleEnhancementTrait
      */
-    protected $uiElement = null;
-
+    protected $uiElement;
 
     /**
      * @param string $title
@@ -26,16 +25,7 @@ trait TitleEnhancementTrait
      */
     public function tooltip($title, $placement='top', $trigger='hover', $isHTML=true)
     {
-        $this->uiElement->addClass('withTooltip');
-
-        $this->uiElement->setAttribute('title', $title);
-        if (!empty($placement)) {
-            $this->uiElement->setAttribute('data-placement', $placement);
-        }
-        if (!empty($trigger)) {
-            $this->uiElement->setAttribute('data-trigger', $trigger);
-        }
-        $this->uiElement->setAttribute('data-html', ($isHTML) ? 'true' : 'false');
+        $this->uiElement->tooltip($title, $placement, $trigger, $isHTML);
 
         return $this;
     }
@@ -50,19 +40,8 @@ trait TitleEnhancementTrait
      */
     public function popover($title, $content, $placement='top', $trigger='hover', $isHTML=true)
     {
-        $this->uiElement->addClass('withPopover');
-
-        $this->uiElement->setAttribute('title', $title);
-        $this->uiElement->setAttribute('data-content', $content);
-        if (!empty($placement)) {
-            $this->uiElement->setAttribute('data-placement', $placement);
-        }
-        if (!empty($trigger)) {
-            $this->uiElement->setAttribute('data-trigger', $trigger);
-        }
-        $this->uiElement->setAttribute('data-html', ($isHTML) ? 'true' : 'false');
+        $this->uiElement->popover($title, $content, $placement, $trigger, $isHTML);
 
         return $this;
     }
-
 }

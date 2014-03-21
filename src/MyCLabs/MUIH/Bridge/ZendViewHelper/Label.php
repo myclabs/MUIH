@@ -3,9 +3,9 @@
 namespace MyCLabs\MUIH\Bridge\ZendViewHelper;
 
 use MyCLabs\MUIH\Label as MUIHLabel;
-use MyCLabs\MUIH\Icon as MUIHIcon;
 use MyCLabs\MUIH\Bridge\ZendViewHelper\Traits\AttributesTrait;
 use MyCLabs\MUIH\Bridge\ZendViewHelper\Traits\TitleEnhancementTrait;
+use MyCLabs\MUIH\Bridge\ZendViewHelper\Traits\IconContentTrait;
 
 /**
  * @author valentin-mcs
@@ -16,6 +16,7 @@ class Label
 {
     use AttributesTrait;
     use TitleEnhancementTrait;
+    use IconContentTrait;
     
     /**
      * @var MUIHLabel
@@ -39,16 +40,23 @@ class Label
      */
     public function label($content, $type=MUIHLabel::TYPE_DEFAULT, $icon=null)
     {
-        if ($icon !== null) {
-            if (!($icon instanceof MUIHIcon)) {
-                $icon = new MUIHIcon($icon);
-            }
-            $content = $icon . ' ' . $content;
-        }
-
         $this->uiElement = new MUIHLabel($content, $type);
+
+        if ($icon !== null) {
+            $this->prependIcon($icon);
+        }
 
         return $this;
     }
 
+    /**
+     * @param string $type
+     * @return $this
+     */
+    public function type($type)
+    {
+        $this->uiElement->changeType($type);
+
+        return $this;
+    }
 }

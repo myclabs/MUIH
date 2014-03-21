@@ -3,8 +3,8 @@
 namespace MyCLabs\MUIH\Bridge\ZendViewHelper;
 
 use MyCLabs\MUIH\Button as UIButton;
-use MyCLabs\MUIH\Icon as UIIcon;
 use MyCLabs\MUIH\Bridge\ZendViewHelper\Traits\AttributesTrait;
+use MyCLabs\MUIH\Bridge\ZendViewHelper\Traits\IconContentTrait;
 
 /**
  * @author valentin-mcs
@@ -14,6 +14,7 @@ use MyCLabs\MUIH\Bridge\ZendViewHelper\Traits\AttributesTrait;
 class Button
 {
     use AttributesTrait;
+    use IconContentTrait;
 
     /**
      * @var UIButton
@@ -38,10 +39,7 @@ class Button
     public function button($content, $type=UIButton::TYPE_DEFAULT, $icon=null)
     {
         if ($icon !== null) {
-            if (!($icon instanceof UIIcon)) {
-                $icon = new UIIcon($icon);
-            }
-            $content = $icon . ' ' . $content;
+            $this->prependIcon($icon);
         }
 
         $this->uiElement = new UIButton($content, $type);
@@ -56,10 +54,7 @@ class Button
      */
     public function link($url, $target=null)
     {
-        $this->uiElement->setAttribute('href', $url);
-        if ($target !== null) {
-            $this->uiElement->setAttribute('target', $target);
-        }
+        $this->uiElement->link($url, $target);
 
         return $this;
     }
@@ -70,22 +65,19 @@ class Button
      */
     public function showModal($idModal)
     {
-        $this->uiElement->setAttribute('href', '#');
-        $this->uiElement->setAttribute('data-toggle', 'modal');
-        $this->uiElement->setAttribute('data-remote', 'false');
-        $this->uiElement->setAttribute('data-target', '#'.$idModal);
+        $this->uiElement->showModal($idModal);
 
         return $this;
     }
 
     /**
+     * @param string $idModal
      * @param string $url
      * @return $this
      */
-    public function ajax($url)
+    public function showAjaxModal($idModal, $url)
     {
-        $this->uiElement->setAttribute('href', $url);
-        $this->uiElement->setAttribute('data-ajax', 'modal');
+        $this->uiElement->showAjaxModal($idModal, $url);
 
         return $this;
     }
@@ -96,11 +88,8 @@ class Button
      */
     public function closeModal($idModal)
     {
-        $this->uiElement->setAttribute('href', '#');
-        $this->uiElement->setAttribute('data-dismiss', 'modal');
-        $this->uiElement->setAttribute('data-target', '#'.$idModal);
+        $this->uiElement->closeModal($idModal);
 
         return $this;
     }
-
 }

@@ -4,6 +4,7 @@ namespace MyCLabs\MUIH\Bridge\ZendViewHelper;
 
 use MyCLabs\MUIH\Badge as MUIHBadge;
 use MyCLabs\MUIH\Bridge\ZendViewHelper\Traits\AttributesTrait;
+use MyCLabs\MUIH\Bridge\ZendViewHelper\Traits\IconContentTrait;
 use MyCLabs\MUIH\Bridge\ZendViewHelper\Traits\TitleEnhancementTrait;
 
 /**
@@ -15,7 +16,8 @@ class Badge
 {
     use AttributesTrait;
     use TitleEnhancementTrait;
-    
+    use IconContentTrait;
+
     /**
      * @var MUIHBadge
      */
@@ -40,5 +42,4 @@ class Badge
 
         return $this;
     }
-
 }

@@ -47,7 +47,7 @@ class ProgressBar
      */
     public function stripped()
     {
-        $this->uiElement->addClass('progress-stripped');
+        $this->uiElement->striped();
 
         return $this;
     }
@@ -55,14 +55,10 @@ class ProgressBar
     /**
      * @return $this
      */
-    public function active()
+    public function activeStripped()
     {
-        if (!$this->uiElement->hasClass('progress-stripped')) {
-            $this->stripped();
-        }
-        $this->uiElement->addClass('active');
+        $this->uiElement->activeStriped();
 
         return $this;
     }
-
 }

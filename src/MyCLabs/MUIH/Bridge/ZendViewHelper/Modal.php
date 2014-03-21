@@ -44,19 +44,9 @@ class Modal
     /**
      * @return $this
      */
-    public function shown()
-    {
-        $this->uiElement->addClass('in');
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
     public function small()
     {
-        $this->uiElement->getMainContent()->addClass('modal-sm');
+        $this->uiElement->small();
 
         return $this;
     }
@@ -66,7 +56,7 @@ class Modal
      */
     public function large()
     {
-        $this->uiElement->getMainContent()->addClass('modal-lg');
+        $this->uiElement->large();
 
         return $this;
     }
@@ -76,7 +66,7 @@ class Modal
      */
     public function withoutBackdrop()
     {
-        $this->uiElement->setAttribute('data-backdrop', 'false');
+        $this->uiElement->removeBackdrop();
 
         return $this;
     }
@@ -86,9 +76,8 @@ class Modal
      */
     public function staticBackdrop()
     {
-        $this->uiElement->setAttribute('data-backdrop', 'static');
+        $this->uiElement->setBackdropStatic();
 
         return $this;
     }
-
 }

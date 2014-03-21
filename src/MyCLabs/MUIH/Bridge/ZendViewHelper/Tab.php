@@ -64,5 +64,4 @@ class Tabs
 
         return $this;
     }
-
 }
