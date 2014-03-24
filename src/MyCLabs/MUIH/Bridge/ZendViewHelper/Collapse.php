@@ -30,13 +30,13 @@ class Collapse
 
     /**
      * @param string $id
-     * @param string $content
      * @param string $title
+     * @param string $content
      * @return $this
      */
-    public function collapse($id, $content, $title)
+    public function collapse($id, $title, $content)
     {
-        $this->uiElement = new MUIHCollapse($id, $content, $title);
+        $this->uiElement = new MUIHCollapse($id, $title, $content);
 
         return $this;
     }
