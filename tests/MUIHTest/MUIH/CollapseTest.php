@@ -13,16 +13,16 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
 {
     public function testDefault()
     {
-        $tag = new Collapse('foo');
+        $tag = new Collapse();
 
         $this->assertEquals(
             '<fieldset>'.
                 '<legend>'.
-                    '<a data-toggle="collapse" href="#foo">'.
-                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i>'.
+                    '<a data-toggle="collapse" href="#">'.
+                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i> '.
                     '</a>'.
                 '</legend>'.
-                '<div class="collapse" id="foo"></div>'.
+                '<div class="collapse" id=""></div>'.
             '</fieldset>',
             $tag->getHTML()
         );
@@ -36,7 +36,7 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
             '<fieldset>'.
                 '<legend>'.
                     '<a data-toggle="collapse" href="#foo">'.
-                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i>'.
+                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i> '.
                         'fu'.
                     '</a>'.
                 '</legend>'.
@@ -55,7 +55,7 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
             '<fieldset>'.
                 '<legend>'.
                     '<a data-toggle="collapse" href="#foo">'.
-                        '<i class="glyphicon glyphicon-chevron-down collapseIndicator"></i>'.
+                        '<i class="glyphicon glyphicon-chevron-down collapseIndicator"></i> '.
                     '</a>'.
                 '</legend>'.
                 '<div class="collapse in" id="foo"></div>'.
@@ -99,7 +99,7 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
             '<fieldset>'.
                 '<legend>'.
                     '<a data-toggle="collapse" href="#foo">'.
-                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i>'.
+                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i> '.
                         'bar'.
                     '</a>'.
                 '</legend>'.
@@ -130,7 +130,7 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
             '<fieldset>'.
                 '<legend>'.
                     '<a data-toggle="collapse" href="#foo">'.
-                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i>'.
+                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i> '.
                     '</a>'.
                 '</legend>'.
                 '<div class="collapse" id="foo">baz</div>'.
@@ -148,7 +148,7 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
             '<fieldset>'.
                 '<legend>'.
                     '<a data-toggle="collapse" href="#foo">'.
-                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i>'.
+                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i> '.
                     '</a>'.
                 '</legend>'.
                 '<div class="collapse" id="foo">bazbar</div>'.
@@ -166,7 +166,7 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
             '<fieldset>'.
                 '<legend>'.
                     '<a data-toggle="collapse" href="#foo">'.
-                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i>'.
+                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i> '.
                     '</a>'.
                 '</legend>'.
                 '<div class="collapse" id="foo">barbaz</div>'.
@@ -193,7 +193,7 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
             '<fieldset>'.
                 '<legend>'.
                     '<a data-toggle="collapse" href="#foo">'.
-                        '<close></close>'.
+                        '<close></close> '.
                     '</a>'.
                 '</legend>'.
                 '<div class="collapse" id="foo"></div>'.
@@ -210,7 +210,7 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
             '<fieldset>'.
                 '<legend>'.
                     '<a data-toggle="collapse" href="#foo">'.
-                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i>'.
+                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i> '.
                     '</a>'.
                 '</legend>'.
                 '<div class="collapse" id="foo"></div>'.
@@ -226,7 +226,7 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
             '<fieldset>'.
                 '<legend>'.
                     '<a data-toggle="collapse" href="#foo">'.
-                        'baz'.
+                        'baz '.
                     '</a>'.
                 '</legend>'.
                 '<div class="collapse" id="foo"></div>'.
@@ -240,7 +240,7 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
             '<fieldset>'.
                 '<legend>'.
                     '<a data-toggle="collapse" href="#foo">'.
-                        'bar'.
+                        'bar '.
                     '</a>'.
                 '</legend>'.
                 '<div class="collapse in" id="foo"></div>'.

@@ -2,12 +2,17 @@
 
 namespace MyCLabs\MUIH;
 
+use MyCLabs\MUIH\Interfaces\DisplayableInterface;
+use MyCLabs\MUIH\Traits\DisplayableTrait;
+
 /**
  * @author     valentin-mcs
  * @package    MyCLabs\MUIH
  */
-class Tabs
+class Tabs implements DisplayableInterface
 {
+    use DisplayableTrait;
+
     /**
      * @var Tab[]
      */
@@ -41,11 +46,12 @@ class Tabs
      * @param string $title
      * @param string $content
      * @param bool $isAjax
+     * @param bool $withCache
      * @return $this
      */
-    public function createTab($id, $title, $content, $isAjax=false)
+    public function createTab($id, $title, $content, $isAjax=false, $withCache=false)
     {
-        return $this->addTab(new Tab($id, $title, $content, $isAjax));
+        return $this->addTab(new Tab($id, $title, $content, $isAjax, $withCache));
     }
 
     /**
@@ -164,7 +170,7 @@ class Tabs
             $a->setAttribute('href', '#' . $tab->getAttribute('id'));
             $a->setAttribute('data-toggle', 'tab');
             if ($tab->isAjax()) {
-                $a->setAttribute('data-ajax', $tab->getContent());
+                $a->setAttribute('data-src', implode('', $tab->getContent()));
             }
             $list[] = new GenericTag('li', $a);
         }

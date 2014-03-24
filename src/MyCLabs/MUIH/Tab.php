@@ -38,14 +38,17 @@ class Tab extends GenericTag
      * @param string $title
      * @param string $content Tab content or url.
      * @param bool $isAjax
+     * @param bool $withCache
      */
-    public function  __construct($id, $title, $content, $isAjax=false)
+    public function  __construct($id, $title=null, $content=null, $isAjax=false, $withCache=false)
     {
-        $this->addClass('tab-pane');
-
         $this->setAttribute('id', $id);
+
+        $this->addClass('tab-pane');
+        $this->addClass('fade');
+
         $this->setTitle($title);
-        $this->isAjax = $isAjax;
+        $this->setAjax($isAjax, $withCache);
         $this->loadingText = self::$defaultAjaxTabLoadingText;
 
         parent::__construct('div', $content);
@@ -68,6 +71,33 @@ class Tab extends GenericTag
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * @return $this
+     */
+    public function active()
+    {
+        $this->addClass('active');
+
+        return $this;
+    }
+
+    /**
+     * @param $isAjax
+     * @param bool $withCache
+     * @return $this
+     */
+    public function setAjax($isAjax, $withCache=false)
+    {
+        $this->isAjax = $isAjax;
+        if ($this->isAjax()) {
+            $this->setAttribute('data-cache', (($withCache) ? 'true': 'false'));
+        } else {
+            $this->unsetAttribute('data-cache');
+        }
+
+        return $this;
     }
 
     /**

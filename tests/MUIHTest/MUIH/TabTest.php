@@ -16,26 +16,61 @@ class TabTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('foo', $tag->getTitle());
         $this->assertEquals(
-            '<div class="tab-pane" id="fu">bar</div>',
+            '<div id="fu" class="tab-pane fade">bar</div>',
             $tag->getHTML()
         );
     }
 
     public function testAjax()
     {
-        $tag = new Tab('fu', 'foo', 'bar', false);
+        $tag = new Tab('fu', 'foo', 'bar', false, true);
 
         $this->assertFalse($tag->isAjax());
         $this->assertEquals(
-            '<div class="tab-pane" id="fu">bar</div>',
+            '<div id="fu" class="tab-pane fade">bar</div>',
+            $tag->getHTML()
+        );
+
+        $tag = new Tab('fu', 'foo', 'bar', true, false);
+
+        $this->assertTrue($tag->isAjax());
+        $this->assertEquals(
+            '<div id="fu" class="tab-pane fade" data-cache="false">Loading…</div>',
+            $tag->getHTML()
+        );
+
+        $tag = new Tab('fu', 'foo', 'bar', true, true);
+
+        $this->assertTrue($tag->isAjax());
+        $this->assertEquals(
+            '<div id="fu" class="tab-pane fade" data-cache="true">Loading…</div>',
+            $tag->getHTML()
+        );
+
+        $tag = new Tab('fu', 'foo', 'bar');
+
+        $tag->setAjax(true);
+        $this->assertTrue($tag->isAjax());
+        $this->assertEquals(
+            '<div id="fu" class="tab-pane fade" data-cache="false">Loading…</div>',
+            $tag->getHTML()
+        );
+
+        $tag = new Tab('fu', 'foo', 'bar');
+
+        $tag->setAjax(true, true);
+        $this->assertTrue($tag->isAjax());
+        $this->assertEquals(
+            '<div id="fu" class="tab-pane fade" data-cache="true">Loading…</div>',
             $tag->getHTML()
         );
 
         $tag = new Tab('fu', 'foo', 'bar', true);
 
-        $this->assertTrue($tag->isAjax());
+        $tag->setAjax(false);
+        $this->assertFalse($tag->isAjax());
         $this->assertEquals(
-            '<div class="tab-pane" id="fu">Loading…</div>',
+            '<div id="fu" class="tab-pane fade">bar</div>',
             $tag->getHTML()
         );
     }
@@ -45,14 +80,14 @@ class TabTest extends \PHPUnit_Framework_TestCase
         $tag = new Tab('fu', 'foo', 'bar', true);
 
         $this->assertEquals(
-            '<div class="tab-pane" id="fu">Loading…</div>',
+            '<div id="fu" class="tab-pane fade" data-cache="false">Loading…</div>',
             $tag->getHTML()
         );
 
         $tag->setLoadingText('baz');
 
         $this->assertEquals(
-            '<div class="tab-pane" id="fu">baz</div>',
+            '<div id="fu" class="tab-pane fade" data-cache="false">baz</div>',
             $tag->getHTML()
         );
     }
@@ -62,7 +97,7 @@ class TabTest extends \PHPUnit_Framework_TestCase
         $tag = new Tab('fu', 'foo', 'bar', true);
 
         $this->assertEquals(
-            '<div class="tab-pane" id="fu">Loading…</div>',
+            '<div id="fu" class="tab-pane fade" data-cache="false">Loading…</div>',
             $tag->getHTML()
         );
 
@@ -71,8 +106,10 @@ class TabTest extends \PHPUnit_Framework_TestCase
         $tag = new Tab('fu', 'foo', 'bar', true);
 
         $this->assertEquals(
-            '<div class="tab-pane" id="fu">baz</div>',
+            '<div id="fu" class="tab-pane fade" data-cache="false">baz</div>',
             $tag->getHTML()
         );
+
+        Tab::$defaultAjaxTabLoadingText = 'Loading…';
     }
 }

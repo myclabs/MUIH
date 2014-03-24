@@ -42,7 +42,9 @@ trait AttributesTrait
      */
     public function unsetAttribute($attributeName)
     {
-        unset($this->attributes[$attributeName]);
+        if ($this->hasAttribute($attributeName)) {
+            unset($this->attributes[$attributeName]);
+        }
 
         return $this;
     }

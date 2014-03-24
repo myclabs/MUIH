@@ -46,7 +46,7 @@ class Collapse extends GenericTag
      * @param string $title
      * @param string $content
      */
-    public function  __construct($id=null, $title=null, $content=null)
+    public function  __construct($id='', $title=null, $content=null)
     {
         $this->setCollapseStateIndicators();
 
@@ -197,7 +197,8 @@ class Collapse extends GenericTag
         } else {
             $indicator = $this->closedIndicator;
         }
-        $link->setContent($indicator . $link->getContentAsString());
+        $link->prependContent(' ');
+        $link->prependContent($indicator);
 
         return (string) $title . $this->content;
     }

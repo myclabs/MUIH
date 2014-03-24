@@ -14,7 +14,7 @@ class TabsTest extends \PHPUnit_Framework_TestCase
 {
     public function testDefault()
     {
-        $tag = new Tabs('10');
+        $tag = new Tabs();
 
         $this->assertEquals(
             '<ul class="nav nav-tabs"></ul>'.
@@ -25,7 +25,7 @@ class TabsTest extends \PHPUnit_Framework_TestCase
 
     public function testGetTabsNav()
     {
-        $tag = new Tabs('10');
+        $tag = new Tabs();
 
         $tabsNav = $tag->getTabsNav();
         $this->assertInstanceOf(GenericTag::class, $tabsNav);
@@ -37,7 +37,7 @@ class TabsTest extends \PHPUnit_Framework_TestCase
 
     public function testGetTabsContent()
     {
-        $tag = new Tabs('10');
+        $tag = new Tabs();
 
         $tabsContent = $tag->getTabsContent();
         $this->assertInstanceOf(GenericTag::class, $tabsContent);
@@ -49,19 +49,28 @@ class TabsTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateTab()
     {
-        $tag = new Tabs('10');
+        $tag = new Tabs();
 
         $tag->createTab('fu', 'foo', 'bar');
         $this->assertEquals(
             '<ul class="nav nav-tabs"><li><a href="#fu" data-toggle="tab">foo</a></li></ul>'.
-            '<div class="tab-content"><div class="tab-pane" id="fu">bar</div></div>',
+            '<div class="tab-content"><div id="fu" class="tab-pane fade">bar</div></div>',
+            $tag->getHTML()
+        );
+
+        $tag = new Tabs();
+
+        $tag->createTab('fu', 'foo', 'bar', true, true);
+        $this->assertEquals(
+            '<ul class="nav nav-tabs"><li><a href="#fu" data-toggle="tab" data-src="bar">foo</a></li></ul>'.
+            '<div class="tab-content"><div id="fu" class="tab-pane fade" data-cache="true">Loading…</div></div>',
             $tag->getHTML()
         );
     }
 
     public function testAddHasGetRemoveTab()
     {
-        $tag = new Tabs('10');
+        $tag = new Tabs();
         $tab = new Tab('fu', 'fu', 'baz');
 
         $this->assertFalse($tag->hasTab('foo'));
@@ -91,7 +100,7 @@ class TabsTest extends \PHPUnit_Framework_TestCase
 
     public function testGetTabsNavAsString()
     {
-        $tag = new Tabs('10');
+        $tag = new Tabs();
 
         $tag->createTab('fu', 'foo', 'bar');
         $this->assertEquals(
@@ -102,11 +111,11 @@ class TabsTest extends \PHPUnit_Framework_TestCase
 
     public function testGetTabsContentAsString()
     {
-        $tag = new Tabs('10');
+        $tag = new Tabs();
 
         $tag->createTab('fu', 'foo', 'bar');
         $this->assertEquals(
-            '<div class="tab-content"><div class="tab-pane" id="fu">bar</div></div>',
+            '<div class="tab-content"><div id="fu" class="tab-pane fade">bar</div></div>',
             $tag->getTabsContentAsString()
         );
     }

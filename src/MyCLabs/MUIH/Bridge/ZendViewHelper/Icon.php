@@ -3,6 +3,7 @@
 namespace MyCLabs\MUIH\Bridge\ZendViewHelper;
 
 use MyCLabs\MUIH\Icon as MUIHIcon;
+use MyCLabs\MUIH\Bridge\ZendViewHelper\Traits\AttributesTrait;
 use MyCLabs\MUIH\Bridge\ZendViewHelper\Traits\TitleEnhancementTrait;
 
 /**
@@ -12,6 +13,7 @@ use MyCLabs\MUIH\Bridge\ZendViewHelper\Traits\TitleEnhancementTrait;
  */
 class Icon
 {
+    use AttributesTrait;
     use TitleEnhancementTrait;
 
     /**
