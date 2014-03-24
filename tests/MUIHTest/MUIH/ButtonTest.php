@@ -30,6 +30,39 @@ class ButtonTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testMini()
+    {
+        $tag = new Button('foo', Button::TYPE_INFO);
+
+        $tag->mini();
+        $this->assertEquals(
+            '<button class="btn btn-info btn-xs" type="button">foo</button>',
+            $tag->getHTML()
+        );
+    }
+
+    public function testSmall()
+    {
+        $tag = new Button('foo', Button::TYPE_INFO);
+
+        $tag->small();
+        $this->assertEquals(
+            '<button class="btn btn-info btn-sm" type="button">foo</button>',
+            $tag->getHTML()
+        );
+    }
+
+    public function testLarge()
+    {
+        $tag = new Button('foo', Button::TYPE_INFO);
+
+        $tag->large();
+        $this->assertEquals(
+            '<button class="btn btn-info btn-lg" type="button">foo</button>',
+            $tag->getHTML()
+        );
+    }
+
     public function testChangeType()
     {
         $tag = new Button('foo');

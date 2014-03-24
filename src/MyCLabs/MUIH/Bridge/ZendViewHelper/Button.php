@@ -48,6 +48,36 @@ class Button
     }
 
     /**
+     * @return $this
+     */
+    public function mini()
+    {
+        $this->uiElement->mini();
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function small()
+    {
+        $this->uiElement->small();
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function large()
+    {
+        $this->uiElement->large();
+
+        return $this;
+    }
+
+    /**
      * @param string $url
      * @param string $target
      * @return $this

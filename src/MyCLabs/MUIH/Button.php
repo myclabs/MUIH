@@ -76,6 +76,36 @@ class Button implements DisplayableInterface, AttributesInterface, ContentInterf
     }
 
     /**
+     * @return $this
+     */
+    public function mini()
+    {
+        $this->addClass('btn-xs');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function small()
+    {
+        $this->addClass('btn-sm');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function large()
+    {
+        $this->addClass('btn-lg');
+
+        return $this;
+    }
+
+    /**
      * @param string $url
      * @param string $target
      * @return $this
