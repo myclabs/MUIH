@@ -13,8 +13,6 @@ $(document.body).on('show.bs.tab', '[data-toggle="tab"]', function(e) {
     var targetTabLink = $(e.target).first();
     var targetTab = $(targetTabLink.attr('href')).first();
     if ((typeof targetTabLink.attr('data-src') !== 'undefined') && (targetTabLink.attr('data-src') !== false) && ((targetTab.attr('data-cache') !== 'true') || (typeof targetTab.attr('data-loading') === 'undefined') || (targetTab.attr('data-loading') === false))) {
-        console.log(targetTab);
-        console.log(targetTabLink.attr('data-src'));
         targetTab.trigger('loadTab.muih', [targetTabLink.attr('data-src')]);
     }
     var previousTab = $($(e.relatedTarget).attr('href')).first();
