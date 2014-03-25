@@ -16,10 +16,13 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
         $tag = new Collapse();
 
         $this->assertEquals(
-            '<fieldset>'.
-                '<legend>'.
+            '<fieldset class="collapse-wrapper">'.
+                '<legend'.
+                ' data-opened-indicator="<i class=&quot;glyphicon glyphicon-chevron-down&quot;></i>"'.
+                ' data-closed-indicator="<i class=&quot;glyphicon glyphicon-chevron-right&quot;></i>"'.
+                '>'.
                     '<a data-toggle="collapse" href="#">'.
-                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i> '.
+                        '<i class="glyphicon glyphicon-chevron-right"></i> '.
                     '</a>'.
                 '</legend>'.
                 '<div class="collapse" id=""></div>'.
@@ -33,10 +36,13 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
         $tag = new Collapse('foo', 'fu', 'bar');
 
         $this->assertEquals(
-            '<fieldset>'.
-                '<legend>'.
+            '<fieldset class="collapse-wrapper">'.
+                '<legend'.
+                ' data-opened-indicator="<i class=&quot;glyphicon glyphicon-chevron-down&quot;></i>"'.
+                ' data-closed-indicator="<i class=&quot;glyphicon glyphicon-chevron-right&quot;></i>"'.
+                '>'.
                     '<a data-toggle="collapse" href="#foo">'.
-                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i> '.
+                        '<i class="glyphicon glyphicon-chevron-right"></i> '.
                         'fu'.
                     '</a>'.
                 '</legend>'.
@@ -52,10 +58,13 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
 
         $tag->show();
         $this->assertEquals(
-            '<fieldset>'.
-                '<legend>'.
+            '<fieldset class="collapse-wrapper">'.
+                '<legend'.
+                ' data-opened-indicator="<i class=&quot;glyphicon glyphicon-chevron-down&quot;></i>"'.
+                ' data-closed-indicator="<i class=&quot;glyphicon glyphicon-chevron-right&quot;></i>"'.
+                '>'.
                     '<a data-toggle="collapse" href="#foo">'.
-                        '<i class="glyphicon glyphicon-chevron-down collapseIndicator"></i> '.
+                        '<i class="glyphicon glyphicon-chevron-down"></i> '.
                     '</a>'.
                 '</legend>'.
                 '<div class="collapse in" id="foo"></div>'.
@@ -71,7 +80,10 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
         $title = $tag->getTitle();
         $this->assertInstanceOf(GenericTag::class, $title);
         $this->assertEquals(
-            '<legend>'.
+            '<legend'.
+            ' data-opened-indicator="<i class=&quot;glyphicon glyphicon-chevron-down&quot;></i>"'.
+            ' data-closed-indicator="<i class=&quot;glyphicon glyphicon-chevron-right&quot;></i>"'.
+            '>'.
                 '<a data-toggle="collapse"></a>'.
             '</legend>',
             $title->getHTML()
@@ -96,10 +108,13 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
 
         $tag->setTitleContent('bar');
         $this->assertEquals(
-            '<fieldset>'.
-                '<legend>'.
+            '<fieldset class="collapse-wrapper">'.
+                '<legend'.
+                ' data-opened-indicator="<i class=&quot;glyphicon glyphicon-chevron-down&quot;></i>"'.
+                ' data-closed-indicator="<i class=&quot;glyphicon glyphicon-chevron-right&quot;></i>"'.
+                '>'.
                     '<a data-toggle="collapse" href="#foo">'.
-                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i> '.
+                        '<i class="glyphicon glyphicon-chevron-right"></i> '.
                         'bar'.
                     '</a>'.
                 '</legend>'.
@@ -127,10 +142,13 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
 
         $tag->setContent('baz');
         $this->assertEquals(
-            '<fieldset>'.
-                '<legend>'.
+            '<fieldset class="collapse-wrapper">'.
+                '<legend'.
+                ' data-opened-indicator="<i class=&quot;glyphicon glyphicon-chevron-down&quot;></i>"'.
+                ' data-closed-indicator="<i class=&quot;glyphicon glyphicon-chevron-right&quot;></i>"'.
+                '>'.
                     '<a data-toggle="collapse" href="#foo">'.
-                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i> '.
+                        '<i class="glyphicon glyphicon-chevron-right"></i> '.
                     '</a>'.
                 '</legend>'.
                 '<div class="collapse" id="foo">baz</div>'.
@@ -145,10 +163,13 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
 
         $tag->prependContent('baz');
         $this->assertEquals(
-            '<fieldset>'.
-                '<legend>'.
+            '<fieldset class="collapse-wrapper">'.
+                '<legend'.
+                ' data-opened-indicator="<i class=&quot;glyphicon glyphicon-chevron-down&quot;></i>"'.
+                ' data-closed-indicator="<i class=&quot;glyphicon glyphicon-chevron-right&quot;></i>"'.
+                '>'.
                     '<a data-toggle="collapse" href="#foo">'.
-                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i> '.
+                        '<i class="glyphicon glyphicon-chevron-right"></i> '.
                     '</a>'.
                 '</legend>'.
                 '<div class="collapse" id="foo">bazbar</div>'.
@@ -163,10 +184,13 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
 
         $tag->appendContent('baz');
         $this->assertEquals(
-            '<fieldset>'.
-                '<legend>'.
+            '<fieldset class="collapse-wrapper">'.
+                '<legend'.
+                ' data-opened-indicator="<i class=&quot;glyphicon glyphicon-chevron-down&quot;></i>"'.
+                ' data-closed-indicator="<i class=&quot;glyphicon glyphicon-chevron-right&quot;></i>"'.
+                '>'.
                     '<a data-toggle="collapse" href="#foo">'.
-                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i> '.
+                        '<i class="glyphicon glyphicon-chevron-right"></i> '.
                     '</a>'.
                 '</legend>'.
                 '<div class="collapse" id="foo">barbaz</div>'.
@@ -190,8 +214,11 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
 
         $tag->setCollapseStateIndicators(new GenericTag('open'), new GenericTag('close'));
         $this->assertEquals(
-            '<fieldset>'.
-                '<legend>'.
+            '<fieldset class="collapse-wrapper">'.
+                '<legend'.
+                ' data-opened-indicator="<open></open>"'.
+                ' data-closed-indicator="<close></close>"'.
+                '>'.
                     '<a data-toggle="collapse" href="#foo">'.
                         '<close></close> '.
                     '</a>'.
@@ -207,10 +234,13 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
         $tag = new Collapse('foo');
 
         $this->assertEquals(
-            '<fieldset>'.
-                '<legend>'.
+            '<fieldset class="collapse-wrapper">'.
+                '<legend'.
+                ' data-opened-indicator="<i class=&quot;glyphicon glyphicon-chevron-down&quot;></i>"'.
+                ' data-closed-indicator="<i class=&quot;glyphicon glyphicon-chevron-right&quot;></i>"'.
+                '>'.
                     '<a data-toggle="collapse" href="#foo">'.
-                        '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i> '.
+                        '<i class="glyphicon glyphicon-chevron-right"></i> '.
                     '</a>'.
                 '</legend>'.
                 '<div class="collapse" id="foo"></div>'.
@@ -223,8 +253,11 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
         $tag = new Collapse('foo');
 
         $this->assertEquals(
-            '<fieldset>'.
-                '<legend>'.
+            '<fieldset class="collapse-wrapper">'.
+                '<legend'.
+                ' data-opened-indicator="bar"'.
+                ' data-closed-indicator="baz"'.
+                '>'.
                     '<a data-toggle="collapse" href="#foo">'.
                         'baz '.
                     '</a>'.
@@ -237,8 +270,11 @@ class CollapseTest extends \PHPUnit_Framework_TestCase
         $tag->show();
 
         $this->assertEquals(
-            '<fieldset>'.
-                '<legend>'.
+            '<fieldset class="collapse-wrapper">'.
+                '<legend'.
+                ' data-opened-indicator="bar"'.
+                ' data-closed-indicator="baz"'.
+                '>'.
                     '<a data-toggle="collapse" href="#foo">'.
                         'bar '.
                     '</a>'.

@@ -74,16 +74,6 @@ class Tab extends GenericTag
     }
 
     /**
-     * @return $this
-     */
-    public function active()
-    {
-        $this->addClass('active');
-
-        return $this;
-    }
-
-    /**
      * @param $isAjax
      * @param bool $withCache
      * @return $this

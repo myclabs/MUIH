@@ -19,6 +19,11 @@ class Tabs implements DisplayableInterface
     protected $tabs = [];
 
     /**
+     * @var Tab
+     */
+    protected $activatedTab;
+
+    /**
      * @var GenericTag
      */
     protected $tabsContent;
@@ -95,12 +100,16 @@ class Tabs implements DisplayableInterface
     public function removeTab($tabId)
     {
         if ($tabId instanceof Tab) {
-            $tabId = $tabId->getAttribute('id');
-        }
-
-        foreach ($this->tabs as $tabIndex => $tab) {
-            if ($tab->getAttribute('id') === $tabId) {
-                unset($this->tabs[$tabIndex]);
+            foreach ($this->tabs as $tabIndex => $tab) {
+                if ($tab === $tabId) {
+                    unset($this->tabs[$tabIndex]);
+                }
+            }
+        } else {
+            foreach ($this->tabs as $tabIndex => $tab) {
+                if ($tab->getAttribute('id') === $tabId) {
+                    unset($this->tabs[$tabIndex]);
+                }
             }
         }
 
@@ -108,14 +117,22 @@ class Tabs implements DisplayableInterface
     }
 
     /**
-     * @param $tabId
+     * @param Tab|string $tabId
      * @return Tab|null
      */
     public function getTab($tabId)
     {
-        foreach ($this->tabs as $tab) {
-            if ($tab->getAttribute('id') === $tabId) {
-                return $tab;
+        if ($tabId instanceof Tab) {
+            foreach ($this->tabs as $tab) {
+                if ($tab === $tabId) {
+                    return $tab;
+                }
+            }
+        } else {
+            foreach ($this->tabs as $tab) {
+                if ($tab->getAttribute('id') === $tabId) {
+                    return $tab;
+                }
             }
         }
 
@@ -128,6 +145,17 @@ class Tabs implements DisplayableInterface
     public function getTabs()
     {
         return $this->tabs;
+    }
+
+    /**
+     * @param Tab|string $tabId
+     * @return $this
+     */
+    public function activeTab($tabId)
+    {
+        $this->activatedTab = $this->getTab($tabId);
+
+        return $this;
     }
 
     /**
@@ -146,7 +174,16 @@ class Tabs implements DisplayableInterface
     public function getTabsContentAsString()
     {
         $tabsContent = clone $this->tabsContent;
-        return (string) $tabsContent->setContent($this->tabs);
+        $tabs = [];
+        foreach ($this->tabs as $tab) {
+            $clonedTab = clone $tab;
+            if ($this->activatedTab === $tab) {
+                $clonedTab->addClass('in');
+                $clonedTab->addClass('active');
+            }
+            $tabs[] = $clonedTab;
+        }
+        return (string) $tabsContent->setContent($tabs);
     }
 
     /**
@@ -172,7 +209,12 @@ class Tabs implements DisplayableInterface
             if ($tab->isAjax()) {
                 $a->setAttribute('data-src', implode('', $tab->getContent()));
             }
-            $list[] = new GenericTag('li', $a);
+
+            $li = new GenericTag('li', $a);
+            if ($this->activatedTab === $tab) {
+                $li->addClass('active');
+            }
+            $list[] = $li;
         }
         $tabsNav = clone $this->tabsNav;
         return (string) $tabsNav->setContent($list);
@@ -184,5 +226,19 @@ class Tabs implements DisplayableInterface
     public function getHTML()
     {
         return $this->getTabsNavAsString() . $this->getTabsContentAsString();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getScript()
+    {
+        if (($this->activatedTab !== null) && ($this->activatedTab->isAjax())) {
+            return $this->documentReady(
+                '$("#' . $this->activatedTab->getAttribute('id') . '").trigger("loadTab.muih");'
+            );
+        }
+
+        return '';
     }
 }

@@ -119,4 +119,50 @@ class TabsTest extends \PHPUnit_Framework_TestCase
             $tag->getTabsContentAsString()
         );
     }
+
+    public function testActiveTab()
+    {
+        $tag = new Tabs();
+        $tag->createTab('oo', 'foo', 'bar');
+        $tag->createTab('u', 'fu', 'baz');
+
+        $tag->activeTab('oo');
+        $this->assertEquals(
+            '<ul class="nav nav-tabs">'.
+                '<li class="active"><a href="#oo" data-toggle="tab">foo</a></li>'.
+                '<li><a href="#u" data-toggle="tab">fu</a></li>'.
+            '</ul>'.
+            '<div class="tab-content">'.
+                '<div id="oo" class="tab-pane fade in active">bar</div>'.
+                '<div id="u" class="tab-pane fade">baz</div>'.
+            '</div>',
+            $tag->getHTML()
+        );
+
+        $tag->activeTab($tag->getTab('u'));
+        $this->assertEquals(
+            '<ul class="nav nav-tabs">'.
+                '<li><a href="#oo" data-toggle="tab">foo</a></li>'.
+                '<li class="active"><a href="#u" data-toggle="tab">fu</a></li>'.
+            '</ul>'.
+            '<div class="tab-content">'.
+                '<div id="oo" class="tab-pane fade">bar</div>'.
+                '<div id="u" class="tab-pane fade in active">baz</div>'.
+            '</div>',
+            $tag->getHTML()
+        );
+
+        $tag->activeTab('fail');
+        $this->assertEquals(
+            '<ul class="nav nav-tabs">'.
+                '<li><a href="#oo" data-toggle="tab">foo</a></li>'.
+                '<li><a href="#u" data-toggle="tab">fu</a></li>'.
+            '</ul>'.
+            '<div class="tab-content">'.
+                '<div id="oo" class="tab-pane fade">bar</div>'.
+                '<div id="u" class="tab-pane fade">baz</div>'.
+            '</div>',
+            $tag->getHTML()
+        );
+    }
 }

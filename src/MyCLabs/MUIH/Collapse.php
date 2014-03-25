@@ -12,13 +12,13 @@ class Collapse extends GenericTag
      * Default is i.glyphicon-chevron-down.
      * @var string
      */
-    static $defaultOpenedIndicator = '<i class="glyphicon glyphicon-chevron-down collapseIndicator"></i>';
+    static $defaultOpenedIndicator = '<i class="glyphicon glyphicon-chevron-down"></i>';
 
     /**
      * Default is i.glyphicon-chevron-right.
      * @var string
      */
-    static $defaultClosedIndicator = '<i class="glyphicon glyphicon-chevron-right collapseIndicator"></i>';
+    static $defaultClosedIndicator = '<i class="glyphicon glyphicon-chevron-right"></i>';
 
     /**
      * @var GenericTag
@@ -48,7 +48,7 @@ class Collapse extends GenericTag
      */
     public function  __construct($id='', $title=null, $content=null)
     {
-        $this->setCollapseStateIndicators();
+        $this->addClass('collapse-wrapper');
 
         $this->link = new GenericTag('a', $title);
         $this->link->setAttribute('data-toggle', 'collapse');
@@ -57,6 +57,8 @@ class Collapse extends GenericTag
         $this->content = new GenericTag('div');
         $this->content->addClass('collapse');
         $this->content->setAttribute('id', $id);
+
+        $this->setCollapseStateIndicators();
 
         parent::__construct('fieldset', $content);
     }
@@ -88,6 +90,14 @@ class Collapse extends GenericTag
         } else {
             $this->closedIndicator = $closedIndicator;
         }
+        $this->getTitle()->setAttribute(
+            'data-opened-indicator',
+            str_replace(['&', '"'], ['&amp;', '&quot;'], (string) $this->openedIndicator)
+        );
+        $this->getTitle()->setAttribute(
+            'data-closed-indicator',
+            str_replace(['&', '"'], ['&amp;', '&quot;'], (string) $this->closedIndicator)
+        );
 
         return $this;
     }

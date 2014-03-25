@@ -59,4 +59,13 @@ trait DisplayableTrait
     {
         echo (string) $this;
     }
+
+    /**
+     * @param string $javascriptContent
+     * @return string
+     */
+    protected function documentReady($javascriptContent)
+    {
+        return '$(document).ready(function() { ' . $javascriptContent . ' });';
+    }
 }
