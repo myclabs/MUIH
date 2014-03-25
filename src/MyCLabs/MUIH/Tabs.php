@@ -234,7 +234,8 @@ class Tabs implements DisplayableInterface
     public function getScript()
     {
         if (($this->activatedTab !== null) && ($this->activatedTab->isAjax())) {
-            return '$("#' . $this->activatedTab->getAttribute('id') . '").trigger("loadTab.muih");';
+            return '$("#' . $this->activatedTab->getAttribute('id') . '")' .
+            '.trigger("loadTab.muih", ["' . implode('', $this->activatedTab->getContent()) . '"]);';
         }
 
         return '';
