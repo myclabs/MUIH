@@ -38,11 +38,11 @@ class Button
      */
     public function button($content, $type=UIButton::TYPE_DEFAULT, $icon=null)
     {
+        $this->uiElement = new UIButton($content, $type);
+
         if ($icon !== null) {
             $this->prependIcon($icon);
         }
-
-        $this->uiElement = new UIButton($content, $type);
 
         return $this;
     }
