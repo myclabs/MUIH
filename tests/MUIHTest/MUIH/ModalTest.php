@@ -202,6 +202,36 @@ class ModalTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testAjax()
+    {
+        $tag = new Modal();
+
+        $tag->ajax();
+        $this->assertEquals(
+            '<div class="modal modal-ajax" data-ajax="content">'.
+                '<div class="modal-dialog">'.
+                    '<div class="modal-content">'.
+                        '<div class="modal-body"></div>'.
+                    '</div>'.
+                '</div>'.
+            '</div>',
+            $tag->getHTML()
+        );
+        $tag = new Modal();
+
+        $tag->ajax(true);
+        $this->assertEquals(
+            '<div class="modal modal-ajax" data-ajax="body">'.
+                '<div class="modal-dialog">'.
+                    '<div class="modal-content">'.
+                        '<div class="modal-body"></div>'.
+                    '</div>'.
+                '</div>'.
+            '</div>',
+            $tag->getHTML()
+        );
+    }
+
     public function testSmall()
     {
         $tag = new Modal();

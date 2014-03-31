@@ -188,6 +188,18 @@ class Modal extends GenericTag
     }
 
     /**
+     * @param bool $replaceBodyOnly
+     * @return $this
+     */
+    public function ajax($replaceBodyOnly=false)
+    {
+        $this->addClass('modal-ajax');
+        $this->setAttribute('data-ajax', ($replaceBodyOnly ? 'body' : 'content'));
+
+        return $this;
+    }
+
+    /**
      * @return $this
      */
     public function small()
