@@ -50,16 +50,23 @@ class Panel extends GenericTag
         }
         $this->addClass('panel-' . $type);
 
-        $this->header = new GenericTag('div', $header);
+        $this->header = new GenericTag('div');
         $this->header->addClass('panel-header');
 
-        $this->footer = new GenericTag('div', $footer);
+        $this->footer = new GenericTag('div');
         $this->footer->addClass('panel-footer');
 
         $this->content= new GenericTag('div');
         $this->content->addClass('panel-body');
 
         parent::__construct('div', $content);
+
+        if ($header !== null) {
+            $this->addTitle($header);
+        }
+        if ($footer !== null) {
+            $this->setFooterContent($footer);
+        }
     }
 
     /**
@@ -167,5 +174,19 @@ class Panel extends GenericTag
         }
 
         return $content;
+    }
+
+    /**
+     * @param string $title
+     * @param string $level
+     * @return $this
+     */
+    public function addTitle($title, $level='h3')
+    {
+        $titleWrapper = new GenericTag($level, $title);
+        $titleWrapper->addClass('panel-title');
+        $this->getHeader()->appendContent($titleWrapper);
+
+        return $this;
     }
 }

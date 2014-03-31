@@ -50,7 +50,7 @@ class Collapse extends GenericTag
     {
         $this->addClass('collapse-wrapper');
 
-        $this->link = new GenericTag('a', $title);
+        $this->link = new GenericTag('a');
         $this->link->setAttribute('data-toggle', 'collapse');
         $this->title = new GenericTag('legend', $this->link);
 
@@ -61,6 +61,8 @@ class Collapse extends GenericTag
         $this->setCollapseStateIndicators();
 
         parent::__construct('fieldset', $content);
+
+        $this->setTitleContent($title);
     }
 
     /**

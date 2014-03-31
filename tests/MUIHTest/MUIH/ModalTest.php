@@ -35,7 +35,27 @@ class ModalTest extends \PHPUnit_Framework_TestCase
             '<div class="modal">'.
                 '<div class="modal-dialog">'.
                     '<div class="modal-content">'.
-                        '<div class="modal-header">bar</div>'.
+                        '<div class="modal-header">'.
+                            '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'.
+                            '<h4 class="modal-title">bar</h4>'.
+                        '</div>'.
+                        '<div class="modal-body">foo</div>'.
+                        '<div class="modal-footer">baz</div>'.
+                    '</div>'.
+                '</div>'.
+            '</div>',
+            $tag->getHTML()
+        );
+
+        $tag = new Modal('foo', 'bar', 'baz', false);
+
+        $this->assertEquals(
+            '<div class="modal">'.
+                '<div class="modal-dialog">'.
+                    '<div class="modal-content">'.
+                        '<div class="modal-header">'.
+                            '<h4 class="modal-title">bar</h4>'.
+                        '</div>'.
                         '<div class="modal-body">foo</div>'.
                         '<div class="modal-footer">baz</div>'.
                     '</div>'.
@@ -195,6 +215,101 @@ class ModalTest extends \PHPUnit_Framework_TestCase
                 '<div class="modal-dialog">'.
                     '<div class="modal-content">'.
                         '<div class="modal-body">foobar</div>'.
+                    '</div>'.
+                '</div>'.
+            '</div>',
+            $tag->getHTML()
+        );
+    }
+
+    public function testAddDefaultDismissButton()
+    {
+        $tag = new Modal();
+
+        $tag->addDefaultDismissButton();
+        $this->assertEquals(
+            '<div class="modal">'.
+                '<div class="modal-dialog">'.
+                    '<div class="modal-content">'.
+                        '<div class="modal-header">'.
+                            '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'.
+                        '</div>'.
+                        '<div class="modal-body"></div>'.
+                    '</div>'.
+                '</div>'.
+            '</div>',
+            $tag->getHTML()
+        );
+    }
+
+    public function testAddDismissButton()
+    {
+        $tag = new Modal();
+
+        $tag->addDismissButton('foo');
+        $this->assertEquals(
+            '<div class="modal">'.
+                '<div class="modal-dialog">'.
+                    '<div class="modal-content">'.
+                        '<div class="modal-header">'.
+                            'foo'.
+                        '</div>'.
+                        '<div class="modal-body"></div>'.
+                    '</div>'.
+                '</div>'.
+            '</div>',
+            $tag->getHTML()
+        );
+
+        $tag = new Modal('foo', 'bar', null, false);
+
+        $tag->addDismissButton('fu');
+        $this->assertEquals(
+            '<div class="modal">'.
+                '<div class="modal-dialog">'.
+                    '<div class="modal-content">'.
+                        '<div class="modal-header">'.
+                            'fu'.
+                            '<h4 class="modal-title">bar</h4>'.
+                        '</div>'.
+                        '<div class="modal-body">foo</div>'.
+                    '</div>'.
+                '</div>'.
+            '</div>',
+            $tag->getHTML()
+        );
+    }
+
+    public function testAddTitle()
+    {
+        $tag = new Modal();
+
+        $tag->addTitle('foo');
+        $this->assertEquals(
+            '<div class="modal">'.
+                '<div class="modal-dialog">'.
+                    '<div class="modal-content">'.
+                        '<div class="modal-header">'.
+                            '<h4 class="modal-title">foo</h4>'.
+                        '</div>'.
+                        '<div class="modal-body"></div>'.
+                    '</div>'.
+                '</div>'.
+            '</div>',
+            $tag->getHTML()
+        );
+
+        $tag = new Modal();
+
+        $tag->addTitle('foo', 'bar');
+        $this->assertEquals(
+            '<div class="modal">'.
+                '<div class="modal-dialog">'.
+                    '<div class="modal-content">'.
+                        '<div class="modal-header">'.
+                            '<bar class="modal-title">foo</bar>'.
+                        '</div>'.
+                        '<div class="modal-body"></div>'.
                     '</div>'.
                 '</div>'.
             '</div>',

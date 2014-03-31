@@ -8,6 +8,7 @@ namespace MyCLabs\MUIH;
  */
 class Modal extends GenericTag
 {
+    public static $defaultDismiss = '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
 
     /**
      * @var GenericTag
@@ -39,15 +40,16 @@ class Modal extends GenericTag
      * @param string $content
      * @param string $header
      * @param string $footer
+     * @param bool   $withDismissButton
      */
-    public function  __construct($content=null, $header=null, $footer=null)
+    public function  __construct($content=null, $header=null, $footer=null, $withDismissButton=true)
     {
         $this->addClass('modal');
 
-        $this->header = new GenericTag('div', $header);
+        $this->header = new GenericTag('div');
         $this->header->addClass('modal-header');
 
-        $this->footer = new GenericTag('div', $footer);
+        $this->footer = new GenericTag('div');
         $this->footer->addClass('modal-footer');
 
         $this->body = new GenericTag('div');
@@ -61,6 +63,16 @@ class Modal extends GenericTag
 
 
         parent::__construct('div', $content);
+
+        if ($header !== null) {
+            $this->addTitle($header);
+        }
+        if ($footer !== null) {
+            $this->setFooterContent($footer);
+        }
+        if ($header !== null && $withDismissButton) {
+            $this->addDefaultDismissButton();
+        }
     }
 
     /**
@@ -185,6 +197,41 @@ class Modal extends GenericTag
         $modalDialog->setContent($modalContent);
 
         return (string) $modalDialog;
+    }
+
+    /**
+     * @return $this
+     */
+    public function addDefaultDismissButton()
+    {
+        $this->getHeader()->prependContent(self::$defaultDismiss);
+
+        return $this;
+    }
+
+    /**
+     * @param GenericTag|string $dismissButton
+     * @return $this
+     */
+    public function addDismissButton($dismissButton)
+    {
+        $this->getHeader()->prependContent($dismissButton);
+
+        return $this;
+    }
+
+    /**
+     * @param string $title
+     * @param string $level
+     * @return $this
+     */
+    public function addTitle($title, $level='h4')
+    {
+        $titleWrapper = new GenericTag($level, $title);
+        $titleWrapper->addClass('modal-title');
+        $this->getHeader()->appendContent($titleWrapper);
+
+        return $this;
     }
 
     /**

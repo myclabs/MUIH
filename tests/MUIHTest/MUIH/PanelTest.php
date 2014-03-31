@@ -29,7 +29,9 @@ class PanelTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             '<div class="panel panel-info">'.
-                '<div class="panel-header">bar</div>'.
+                '<div class="panel-header">'.
+                    '<h3 class="panel-title">bar</h3>'.
+                '</div>'.
                 '<div class="panel-body">foo</div>'.
                 '<div class="panel-footer">baz</div>'.
             '</div>',
@@ -137,6 +139,35 @@ class PanelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             '<div class="panel panel-default">'.
                 '<div class="panel-body">foobar</div>'.
+            '</div>',
+            $tag->getHTML()
+        );
+    }
+
+    public function testAddTitle()
+    {
+        $tag = new Panel();
+
+        $tag->addTitle('foo');
+        $this->assertEquals(
+            '<div class="panel panel-default">'.
+                '<div class="panel-header">'.
+                    '<h3 class="panel-title">foo</h3>'.
+                '</div>'.
+                '<div class="panel-body"></div>'.
+            '</div>',
+            $tag->getHTML()
+        );
+
+        $tag = new Panel();
+
+        $tag->addTitle('foo', 'bar');
+        $this->assertEquals(
+            '<div class="panel panel-default">'.
+                '<div class="panel-header">'.
+                    '<bar class="panel-title">foo</bar>'.
+                '</div>'.
+                '<div class="panel-body"></div>'.
             '</div>',
             $tag->getHTML()
         );
